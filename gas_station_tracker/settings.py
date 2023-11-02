@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5nslf-su#bne0qz$&(8&eutx%7s=y9l5jc-h(4f=gh*s7e%1zt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['gas-station-tracker-4300-f2023--riggs1992.repl.co', '10.20.1.4', 'gas-station-tracker-4300-f2023.riggs1992.repl.co']
+ALLOWED_HOSTS = ['*']
 
 
 
