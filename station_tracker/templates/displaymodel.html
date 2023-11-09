@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+  border:1px solid black;
+}
+
+div.relative {
+  position: relative;
+  left: 1200px;
+  font-size: 30px;
+}
+</style>
+<body>
+
+<h2>display of stations</h2>
+
+    <table style="width:40%">
+
+        <tr>
+            <th>ID </th>
+            <th>Name </th>
+            <th>Address </th>
+            <th>Other Amenities</th>
+            <th>buttons</th>
+        </tr>
+
+        <tr>
+        {% for p in data.list %}
+            <tr>
+            <td> {{ p.id }} </td> 
+            <td> {{ p.name }} </td> 
+            <td> {{ p.location }} </td>
+            <td> {{ p.additions }} </td>
+            <td><button>WIP</button></td>
+            </tr>
+        {% endfor %}
+        </tr>
+    
+    </table>
+
+    <div class="relative">
+        Map over here somewhere WIP
+    </div>
+</body>
+</html>

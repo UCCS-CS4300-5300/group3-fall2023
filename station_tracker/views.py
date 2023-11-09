@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm
+from station_tracker.models import Gas_Station
 
 # Create your views here.
 #def home(request):
@@ -41,3 +42,23 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+
+def gas_station_view(request):
+    stations = Gas_Station.objects.all()
+
+    serialized_data = [
+
+        {
+            'id': station.id,
+            'name': station.name,
+            'location': station.location,
+            'additions': station.additions,
+        }
+        for station in stations
+    ]
+    response_data = {
+        'list' : serialized_data
+    }
+
+    return render(request, 'displaymodel.html', {'data': response_data})
