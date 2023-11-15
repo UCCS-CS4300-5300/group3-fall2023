@@ -1,0 +1,9 @@
+{% if form.instance.pk %}
+  <form method="POST" action="{% url 'update_customer_inquiry' form.instance.pk %}">
+{% else %}
+  <form method="POST" action="{% url 'create_customer_inquiry' %}">
+{% endif %}
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
