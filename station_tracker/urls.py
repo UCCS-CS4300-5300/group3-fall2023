@@ -10,7 +10,6 @@ urlpatterns = [
    path('logout/', views.user_logout, name='logout'),
    path('feedback/', views.feedback_form, name="feedback"),
    path('station-tracker/', views.map_view, name="station-tracker"),
-   
    path('test_model/', views.gas_station_view, name='test_model'),
 ]
 
