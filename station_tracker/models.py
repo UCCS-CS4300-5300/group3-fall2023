@@ -37,6 +37,8 @@ class Gas_Station(models.Model):
     name = models.CharField(max_length=50)
     location = models.ForeignKey(Address, verbose_name="Location",  default="Unknown", on_delete=models.CASCADE)
     additions = models.ForeignKey(Addition, verbose_name="Additions", default="None", on_delete=models.CASCADE)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
     #phone_number
     #hours
 

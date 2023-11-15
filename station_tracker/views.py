@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from .models import Feedback
-from station_tracker.models import Gas_Station
+from .models import Feedback, Gas_Station
+from geopy.geocoders import Nominatim
+from geopy.distance import Geodesic
+import folium
 
 # Create your views here.
 #def home(request):
@@ -49,9 +51,33 @@ def user_logout(request):
 def feedback_form(request):
   return render(request, 'feedback.html')
 
+def map_view(request):
+    
+    geolocator = Nominatim(timeout=10, user_agent="Fuel Buddy")
+    location = 'Colorado'
+    
+    stations =  Gas_Station.objects.all()
+    
+    location = "Colorado springs" # For testing, doesn't need structure so it can be any address string. zipcodes seem to be the most accurate though.
 
+    locator = geolocator.geocode(location) # converts addresses to coordinates
+    if location is 'Colorado':
+        station_map = folium.Map(location=[locator.latitude, locator.longitude], zoom_start=8)
+    else:
+        station_map = folium.Map(location=[locator.latitude, locator.longitude], zoom_start=13)
 
-def gas_station_view(request):
+    
+    folium.Marker([locator.latitude, locator.longitude]).add_to(station_map)
+    folium.Circle([locator.latitude, locator.longitude], radius=16090/2).add_to(station_map) # distance is in meters, multiply by 1609 for conversion to miles. 
+
+    for station in stations:
+        coords = (station.latitude, station.longitude)
+        folium.Marker(coords).add_to(station_map)
+
+    context = {'map': station_map._repr_html_()}
+    return render(request, 'station-tracker.html', context)
+
+    def gas_station_view(request):
     stations = Gas_Station.objects.all()
 
     serialized_data = [
