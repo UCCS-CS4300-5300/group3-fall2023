@@ -1,5 +1,17 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
+#Note: PhoneNumberField is a custom module for Django installed via pip
 
+class Feedback(models.Model):
+  name = models.CharField(max_length=200)
+  email = models.EmailField()
+  phone = PhoneNumberField(null=False, blank=False, unique=True)
+  message = models.TextField()
+  created_at = models.DateTimeField(auto_now_add=True)
+  #todo: implement pointer to company
+  
+  def __str__(self):
+    return self.name
 
 class Address(models.Model):
     street = models.CharField(verbose_name="Street Name", max_length=50)
