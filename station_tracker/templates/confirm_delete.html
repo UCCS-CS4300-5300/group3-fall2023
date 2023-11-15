@@ -1,0 +1,6 @@
+<form method="POST" action="{% url 'delete_gas_station_owner' owner.id %}">
+    {% csrf_token %}
+    <p>Are you sure you want to delete this item?</p>
+    <button type="submit">Delete</button>
+</form>
+
