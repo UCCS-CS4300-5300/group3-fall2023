@@ -1,0 +1,12 @@
+<!-- gas_station_form.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if action == 'create' %}
+        <button type="submit" formaction="{% url 'create_gas_station' %}">Create Gas Station</button>
+    {% elif action == 'update' %}
+        <button type="submit" formaction="{% url 'update_gas_station' gas_station.id %}">Update Gas Station</button>
+    {% elif action == 'delete' %}
+        <button type="submit" formaction="{% url 'delete_gas_station' gas_station.id %}">Delete Gas Station</button>
+    {% endif %}
+</form>

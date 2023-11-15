@@ -12,6 +12,11 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
+class GasStationForm(forms.ModelForm):
+    class Meta:
+        model = GasStation
+        fields = '__all__'
+
 class GasStationOwnerForm(forms.ModelForm):
     class Meta:
         model = GasStationOwner
