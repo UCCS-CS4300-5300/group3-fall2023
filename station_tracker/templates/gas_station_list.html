@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gas Stations</title>
+</head>
+<body>
+    <h1>List of Gas Stations</h1>
+    <ul>
+      {% for gas_station in gas_stations %}
+      <li>
+          Name: {{ gas_station.station.name }}<br>
+          Location: {{ gas_station.station.location }}<br>
+          Owner: {{ gas_station.station_owner.owner_name }}<br>
+          <!-- Add other fields here as needed -->
+      </li>
+          <!-- Display other details as needed: gas_station.address, gas_station.services_offered, etc. -->
+      {% endfor %}
+    </ul>
+
+    <!-- Button to create a new gas station -->
+    <a href="{% url 'create_gas_station_listing' %}">
+        <button>Create Gas Station</button>
+    </a>
+</body>
+</html>
