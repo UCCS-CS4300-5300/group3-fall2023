@@ -77,5 +77,9 @@ urlpatterns = [
     # path('gas-stations/', views.gas_station_list, name='gas_station_list'),
     path('gas-stations/',
          GasStationListView.as_view(),
-         name='gas_station_list')
-]
+         name='gas_station_list'),
+# gas station urls
+    path('create-gas-station/', views.create_gas_stations, name='create_gas_stations'),
+      path('<int:gas_station_id>/update/', views.update_gas_station, name='update_gas_station'),
+      path('/delete/<int:gas_station_id>', views.delete_gas_station, name='delete_gas_station'),
+  ]
