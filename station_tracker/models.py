@@ -31,8 +31,8 @@ class Gas_Station(models.Model):
     #phone_number
     #hours
 
-  def __str__(self):
-    return self.station_name
+    def __str__(self):
+        return self.station_name
   
 class Feedback(models.Model):
     name = models.CharField(max_length=50)
