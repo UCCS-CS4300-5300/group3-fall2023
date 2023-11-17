@@ -105,9 +105,7 @@ def map_view(request):
         folium.Marker(coords).add_to(station_map)
 
     context = {'map': station_map._repr_html_()}
-
     return render(request, 'station-tracker.html', context)
 
 def user_about(request):
   return render(request, 'about.html')
-
