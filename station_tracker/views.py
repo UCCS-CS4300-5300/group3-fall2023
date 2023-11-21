@@ -4,9 +4,8 @@ from .models import Feedback, AboutUs, Gas_Station
 from geopy.geocoders import Nominatim
 from geopy.distance import Geodesic
 import folium
-<<<<<<< HEAD
+
 from .forms import UserCreationForm, LogiForm, GasStationOwnerForm, GasStationListingForm, GasStationReviewForm, CustomerInquiryForm
-=======
 
 
 from django.shortcuts import render, redirect
@@ -23,7 +22,7 @@ from .forms import (
     FeedbackForm
 )
 
->>>>>>> cfe58171 (updated the gas station crud functionality)
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
@@ -355,12 +354,7 @@ def delete_customer_inquiry(request, inquiry_id):
 #     gas_stations = GasStationListing.objects.all()
 #     return render(request, 'gas_station_list.html', {'gas_stations': gas_stations})
 class GasStationListView(ListView):
-<<<<<<< HEAD
-  model = GasStationListing
-  template_name = 'gas_station_list.html'
-  context_object_name = 'gas_stations'
->>>>>>> 173a3f15 (created the owner , gas station, reviews ,and  inquiry  functionality thst spplies crud)
-=======
+
     model = GasStationListing
     template_name = 'gas_station_list.html'
     context_object_name = 'gas_stations'
@@ -417,4 +411,4 @@ def delete_gas_station(request, gas_station_id):
         return redirect('gas_stations')
     else:
         return gas_station_form(request, 'delete', gas_station)
->>>>>>> cfe58171 (updated the gas station crud functionality)
+
