@@ -87,7 +87,7 @@ def create_gas_station_owner(request):
             messages.error(request, 'Error creating gas station owner')
     else:
         form = GasStationOwnerForm()
-    return render(request, 'owner_form.html', {'form': form})
+    return render(request, 'owner_form.html', {'form': form},status=400)
 
 
 @csrf_exempt
