@@ -105,22 +105,28 @@
               </div>
             </div> 
         </form> 
-		<form method="POST" id="signup-form">
-			{% csrf_token %}
-			{{ form.as_p }}
-			 <div class="p-2">
-			  <input type="checkbox" name="customer" id="customer" />
-			  <label for="Customer">Customer</label>
-			  <input type="checkbox" name="gas_station_owner" id="gas_station_owner" />
-			  <label for="agree">Gas Station Owner</label>
-			</div>
-			<button class="btn btn-light" type="submit" id="submit-button">Create Account</button>
-			<button class="btn btn-danger" type="button" id="cancel-button">Back</button> 
-			<div>
-			  <p id="welcome-message" style="display: none;">Welcome, Logged-in User!</p>
-			  <p>Already have an Account?: <a href="{% url 'login' %}">Login</a></div> 
-		</form>
-  <!-- End Form Body -->
+      <form method="POST" id="signup-form">
+          {% csrf_token %}
+          {{ form.as_p }}
+
+          <!-- <div class="p-2">
+              <input type="checkbox" name="is_customer" id="customer" />
+              <label for="customer">Customer</label>
+
+              <input type="checkbox" name="is_gas_station_owner" id="gas_station_owner" />
+              <label for="gas_station_owner">Gas Station Owner</label>
+          </div> -->
+
+          <button class="btn btn-light" type="submit" id="submit-button">Create Account</button>
+          <button class="btn btn-danger" type="button" id="cancel-button">Back</button>
+
+          <div>
+              <p id="welcome-message" style="display: none;">Welcome, Logged-in User!</p>
+              <p>Already have an Account?: <a href="{% url 'login' %}">Login</a></p>
+          </div>
+      </form>
+
+		
       {# Display messages here #}
       {% if messages %}
         <ul class="messages">

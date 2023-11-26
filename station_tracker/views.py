@@ -1,25 +1,14 @@
-
-
 from .models import Feedback, AboutUs, Gas_Station
 from geopy.geocoders import Nominatim
 from geopy.distance import Geodesic
 import folium
-
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import (
-    UserCreationForm,
-    LoginForm,
-    GasStationOwnerForm,
-    GasStationForm,
-    GasStationListingForm,
-    GasStationReviewForm,
-    CustomerInquiryForm,
-    GasPriceUpdateForm, 
-    FeedbackForm
-)
-
+from .forms import (UserCreationForm, LoginForm, GasStationOwnerForm,
+                    GasStationForm, GasStationListingForm,
+                    GasStationReviewForm, CustomerInquiryForm,
+                    GasPriceUpdateForm, FeedbackForm, SignupForm)
+from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
@@ -39,27 +28,27 @@ from django.views.generic import ListView
 def index(request):
     return render(request, 'index.html')
 
+
 # Main page
 def main(request):
-  # Retrieve user information
-  user = request.user
+    # Retrieve user information
+    user = request.user
 
-  # Pass user information to the template
-  context = {'user': user}
-  return render(request, 'main.html', context)
+    # Pass user information to the template
+    context = {'user': user}
+    return render(request, 'main.html', context)
 
 
-# signup page
-def user_signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
-
+# # signup page
+# def user_signup(request):
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('login')
+#     else:
+#         form = UserCreationForm()
+#     return render(request, 'signup.html', {'form': form})
 
 # login page
 def user_login(request):
@@ -84,6 +73,32 @@ def user_login(request):
         return render(request, 'login.html', {'user': request.user, 'form': form})
 
 
+def user_signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+
+            # Logic to assign roles based on selected checkboxes
+            if form.cleaned_data['is_customer']:
+                group = Group.objects.get(
+                    name='Customer')  # Make sure 'Customer' group exists
+                user.groups.add(group)
+
+            if form.cleaned_data['is_gas_station_owner']:
+                group = Group.objects.get(
+                    name='GasStationOwner'
+                )  # Ensure 'GasStationOwner' group exists
+                user.groups.add(group)
+
+            return redirect(
+                'login')  
+    else:
+        form = SignupForm()
+
+    return render(request, 'signup.html', {'form': form})
+
+
 # logout page
 def user_logout(request):
 
@@ -91,45 +106,53 @@ def user_logout(request):
 
 
 def update_gas_prices(request):
-  if request.method == 'POST':
-    form = GasPriceUpdateForm(request.POST)
-    if form.is_valid():
-        form.save()
-  Gas_Price_Update_Form = GasPriceUpdateForm()
-  return render(request, 'update_gas_prices.html', {"Gas_Price_Update_Form": Gas_Price_Update_Form})
+    if request.method == 'POST':
+        form = GasPriceUpdateForm(request.POST)
+        if form.is_valid():
+            form.save()
+    Gas_Price_Update_Form = GasPriceUpdateForm()
+    return render(request, 'update_gas_prices.html',
+                  {"Gas_Price_Update_Form": Gas_Price_Update_Form})
+
 
 def feedback_form(request):
-  return render(request, 'feedback.html')
-  
+    return render(request, 'feedback.html')
+
+
 def render_feedback_form(request):
-  if request.method == 'POST':
-    form = FeedbackForm(request.POST)
-    if form.is_valid():
-      form.save()
-      messages.success(request, "Your feedback has been submitted!")
-      return redirect('feedback')
-  else: 
-    form = FeedbackForm()
-  return render(request, 'feedback.html', {'form': form})
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your feedback has been submitted!")
+            return redirect('feedback')
+    else:
+        form = FeedbackForm()
+    return render(request, 'feedback.html', {'form': form})
+
 
 def map_view(request):
-    
+
     geolocator = Nominatim(timeout=10, user_agent="Fuel Buddy")
     location = 'Colorado'
-    
-    stations =  Gas_Station.objects.all()
-    
-    location = "Colorado springs" # For testing, doesn't need structure so it can be any address string. zipcodes seem to be the most accurate though.
 
-    locator = geolocator.geocode(location) # converts addresses to coordinates
+    stations = Gas_Station.objects.all()
+
+    location = "Colorado springs"  # For testing, doesn't need structure so it can be any address string. zipcodes seem to be the most accurate though.
+
+    locator = geolocator.geocode(location)  # converts addresses to coordinates
     if location == 'Colorado':
-        station_map = folium.Map(location=[locator.latitude, locator.longitude], zoom_start=8)
+        station_map = folium.Map(
+            location=[locator.latitude, locator.longitude], zoom_start=8)
     else:
-        station_map = folium.Map(location=[locator.latitude, locator.longitude], zoom_start=13)
+        station_map = folium.Map(
+            location=[locator.latitude, locator.longitude], zoom_start=13)
 
-    
     folium.Marker([locator.latitude, locator.longitude]).add_to(station_map)
-    folium.Circle([locator.latitude, locator.longitude], radius=16090/2).add_to(station_map) # distance is in meters, multiply by 1609 for conversion to miles. 
+    folium.Circle(
+        [locator.latitude, locator.longitude], radius=16090 / 2).add_to(
+            station_map
+        )  # distance is in meters, multiply by 1609 for conversion to miles.
 
     for station in stations:
         coords = (station.latitude, station.longitude)
@@ -139,9 +162,9 @@ def map_view(request):
 
     return render(request, 'station-tracker.html', context)
 
-def user_about(request):
-  return render(request, 'about.html')
 
+def user_about(request):
+    return render(request, 'about.html')
 
 
 # Authentication decorator
@@ -368,9 +391,7 @@ def create_gas_stations(request):
         if form.is_valid():
             form.save()
 
-            return redirect(
-                'ga-stations/'
-            )  
+            return redirect('ga-stations/')
         else:
             # If the form is not valid, re-render the form with errors
             return render(request, 'gas_station_form.html', {'form': form})

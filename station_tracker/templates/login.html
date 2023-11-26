@@ -174,7 +174,32 @@
         window.location.href = "{% url 'index' %}";
     });
 </script>
+  <script>
+      // Check if the gas_station_owner checkbox was selected during signup
+      const isGasStationOwner = localStorage.getItem('gas_station_owner_selected');
 
+      // Show/hide buttons based on the checkbox selection
+      window.onload = function () {
+          if (isGasStationOwner) {
+              // Show only the Gas Station Owner button
+              document.getElementById('submit-button').style.display = 'none';
+              document.getElementById('cancel-button').style.display = 'block';
+          } else {
+              // Show only the Customer button
+              document.getElementById('submit-button').style.display = 'block';
+              document.getElementById('cancel-button').style.display = 'none';
+          }
+      };
+
+      document.getElementById('login-form').addEventListener('submit', function() {
+          // Your logic to display the success message here
+          document.getElementById('success-message').style.display = 'block';
+      });
+
+      document.getElementById('cancel-button').addEventListener('click', function() {
+          window.location.href = "{% url 'index' %}";
+      });
+  </script>
 
 </body>
 
