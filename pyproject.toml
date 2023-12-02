@@ -10,5 +10,4 @@ name = "django-template"
 version = "0.1.0"
 [tool.poetry.dependencies]
 python = "^3.8"
-django = "4.2.7"
 [tool.poetry.dev-dependencies]
