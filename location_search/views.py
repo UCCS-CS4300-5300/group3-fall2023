@@ -97,7 +97,6 @@ def gas_station_database(request, location, radius, api_key):
     data = nearby_gas_search(location, radius, api_key)
     #print(data)
 
-    gas_secret = os.environ['gas_key']
     
 
     # Iterate over each result in the data
@@ -179,8 +178,6 @@ def map_viewSubmit(request, search, userRange):
     for station in stations:
         
         coords = (station.latitude, station.longitude)
-        #Get google maps URL to the gas station
-        #google_maps_link = f"<a href = http://maps.google.com/?q={station.address.replace(' ', '+')}>Maps to location</a>"
         
         
         
