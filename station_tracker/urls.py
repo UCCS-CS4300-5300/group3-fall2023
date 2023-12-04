@@ -1,14 +1,35 @@
+
 from django.urls import path
 from .views import GasStationListView
 from . import views
+from django.urls import path, include
 
 urlpatterns = [
-    # path('', home,name="home"),
-    path('', views.index, name='home'),
-    path('login/', views.user_login, name='login'),
-    path('signup/', views.user_signup, name='signup'),
-    path('logout/', views.user_logout, name='logout'),
-    # Gas Station Owner URLs
+   path('', views.index, name='home'),
+   
+
+   path('login/', views.user_login, name='login'),
+   path('signup/', views.user_signup, name='signup'),
+   path('logout/', views.user_logout, name='logout'),
+   path('update_gas_prices/', views.update_gas_prices, name="update_gas_prices"),
+   path('location_search/', include('location_search.urls')),
+   path('feedback/', views.render_feedback_form, name="feedback"),
+   path('station-tracker/', views.map_view, name="station-tracker"),
+   path('about/', views.user_about, name="about"),
+   path('fueldemand/', views.user_fueldemand, name="fueldemand"),
+   path('stationowner/', views.user_stationowner, name="stationowner"),
+   path('payment/', views.user_payment, name="payment"),
+
+
+
+
+# 
+#     # path('', home,name="home"),
+#     path('', views.index, name='home'),
+#     path('login/', views.user_login, name='login'),
+#     path('signup/', views.user_signup, name='signup'),
+#     path('logout/', views.user_logout, name='logout'),
+#     # Gas Station Owner URLs
     path('create-owner/',
          views.create_gas_station_owner,
          name='create_gas_station_owner'),
@@ -18,6 +39,8 @@ urlpatterns = [
     path('delete-owner/<int:owner_id>/',
          views.delete_gas_station_owner,
          name='delete_gas_station_owner'),
+
+
 
     # Gas Station Listing URLs
     path('create-listing/',
@@ -58,5 +81,7 @@ urlpatterns = [
 # gas station urls
     path('create-gas-station/', views.create_gas_stations, name='create_gas_stations'),
       path('<int:gas_station_id>/update/', views.update_gas_station, name='update_gas_station'),
-      path('/delete/<int:gas_station_id>', views.delete_gas_station, name='delete_gas_station'),
+
+      path('delete/<int:gas_station_id>', views.delete_gas_station, name='delete_gas_station'),
+
   ]

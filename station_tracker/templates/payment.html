@@ -25,19 +25,35 @@
         text-align: center; 
     }
     #submit-button {
-        /*background-color: #4CAF50;*/
-        /*color: white;*/
+        background-color: #4CAF50;
+        color: white;
         padding: 10px 20px;
         border: none;
         cursor: pointer;
     }
     #cancel-button {
-        /*background-color: #f44336;*/ 
-        /*color: white;*/
+        background-color: #f44336; 
+        color: white;
         padding: 10px 20px;
         border: none;
         cursor: pointer;
     }
+    #wp-block-button__link {
+        background: #0397a9;
+        font-weight: 600;
+        padding: 8px 24px;
+        border: none;
+        border-radius: 28px;
+        box-shadow: none;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 18px;
+        margin: 0;
+        text-align: center;
+        text-decoration: none;
+        overflow-wrap: break-word;
+    }
+
 </style>
 <head>
     <meta charset="utf-8">
@@ -48,7 +64,7 @@
 </head>
 
 <body style="background: linear-gradient(180deg, var(--bs-primary-bg-subtle) 80%, var(--bs-primary-border-subtle) 100%);">
-  
+
   <!--Start Navbar-->
     <nav class="navbar navbar-expand-md bg-primary py-3" style="background: rgb(108,117,125);">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="{% url 'home'%}"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: rgb(12,57,84);"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-fuel-pump">
@@ -57,9 +73,9 @@
                     </svg></span><span class="focus-ring focus-ring-primary" style="font-weight: bold;font-size: 24px;">Fuel Buddy</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-4"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-4">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active fw-bold" href="{% url 'fueldemand'%}">Fuel Demand</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold" href="#">First Item</a></li>
                     <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'about'%}">About Us</a></li>
-                  <li class="nav-item"><a class="nav-link fw-bold"href="{% url 'feedback'%}">Feedback Form</a></li>
+                  <li class="nav-item"><a class="nav-link active fw-bold"href="{% url 'feedback'%}">Feedback Form</a></li>
                 </ul>
                 <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Log In</button><button class="btn btn-primary" type="button">Sign Up</button></div>
             </div>
@@ -80,46 +96,62 @@
                 </div>
             </div>
         </div>
-      
-         <form>
+
+         <form id="contactForm-1" action="javascript:void();" method="get"><input class="form-control" type="hidden">
             <div class="row">
                 <div class="col-md-6">
                     <div id="successfail"></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6" id="message">
+                <div class="col-md-12" id="message">
                     <fieldset>
-                        <legend><i class="fa fa-envelope"></i> Login</legend>
+                     <center><h3> <b>Payment</b> </h3></center> 
                     </fieldset>
-                
+
                     <hr>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <fieldset>
                         <legend> <i class="fa fa-location-arrow"></i>&nbsp;</legend>
                     </fieldset>
-                    
+
                 </div>
               <div>
               </div>
             </div> 
         </form> 
-		<form method="POST" action="{% url 'login' %}" id="login-form">
-			{% csrf_token %}
-			{{ form.as_p }}
-			 <div class="p-2">
-			  <input type="checkbox" name="customer" id="customer" />
-			  <label for="Customer">Customer</label>
-			  <input type="checkbox" name="gas_station_owner" id="gas_station_owner" />
-			  <label for="agree">Gas Station Owner</label>
-			</div>
-			<button class="btn btn-light" type="submit" id="submit-button">Login</button>
-			<button class="btn btn-danger" type="button" id="cancel-button">Back</button> 
-			<div>
-			  <p id="welcome-message" style="display: none;">Welcome, User!</p>
-			  <p>Don't have an Account? Create One!: <a href="{% url 'signup' %}">Sign Up</a></div> 
-		</form>
+    <form method="POST" action="{% url 'fueldemand' %}" id="fueldemand-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="wp-block-columns" class="col-md-6">
+      <div class="wp-block-column">
+      <div class="wp-block-media-text alignwide is-stacked-on-mobile">
+    <!--  <figure class="wp-block-media-text__media"><img class="wp-image-15932" src="{% static 'assets/img/fuel-station.png' %}" sizes="(max-width: 400px) 100vw, 400px" alt="pump1"></figure>
+      <div class="wp-block-media-text__content">
+      <p class="has-normal-font-size"><strong>Pump # 1</strong></p>
+      <div class="wp-block-button"><a class="wp-block-button__link" href="https://www.eia.gov/petroleum/weekly/gasoline.php" target="_blank" rel="noopener noreferrer">Make Payment</a></div>
+      </div>
+      </div>
+      </div>
+      <div class="wp-block-column"  
+      <div class="wp-block-media-text alignwide is-stacked-on-mobile">
+      <figure class="wp-block-media-text__media"><img class="wp-image-15936" src="https://blog-content.gasbuddy.com/uploads/2020/05/Q1FuelBuyingTrendsV2.png" sizes="(max-width: 400px) 100vw, 400px" srcset="https://blog-content.gasbuddy.com/uploads/2020/05/Q1FuelBuyingTrendsV2.png 2400w, https://blog-content.gasbuddy.com/uploads/2020/05/Q1FuelBuyingTrendsV2-428x285.png 428w, https://blog-content.gasbuddy.com/uploads/2020/05/Q1FuelBuyingTrendsV2-768x512.png 768w, https://blog-content.gasbuddy.com/uploads/2020/05/Q1FuelBuyingTrendsV2.png 1536w, https://blog-content.gasbuddy.com/uploads/2020/05/Q1FuelBuyingTrendsV2.png 2048w" alt=""></figure>
+      <div class="wp-block-media-text__content">
+      <p class="has-normal-font-size"><strong>Q1 Consumer Fuel-Buying Trend Report</strong></p>
+      <div class="wp-block-button"><a class="wp-block-button__link" href="https://www.gasbuddy.com/NewsRoom/PressRelease/897" target="_blank" rel="noopener noreferrer">View Report</a></div>
+      </div>
+      </div>
+      </div>
+      </div>
+    <!--  <button type="submit" id="submit-button">Login</button>
+      <button type="button" id="cancel-button">Back</button> -->
+      <section class="section">
+    <div class="container">
+      <button class="button is-primary" id="submitBtn">Purchase!</button>
+    </div>
+  </section>
+    </form>
   <!-- End Form Body -->
       {# Display messages here #}
       {% if messages %}
@@ -136,7 +168,7 @@
 
     </div>
 
-  
+
 <!-- Start Footer -->
   <footer class="text-center">
       <div class="container text-muted py-4 py-lg-5">
@@ -160,61 +192,9 @@
       </div>
   </footer>
   <!-- End Footer -->
-  
+
   <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
   <script src="{% static 'assets/js/script.min.js' %}"></script>
-  
-  <script>
-    document.getElementById('login-form').addEventListener('submit', function() {
-        // Your logic to display the success message here
-        document.getElementById('success-message').style.display = 'block';
-    });
-
-    document.getElementById("cancel-button").addEventListener("click", function() {
-        window.location.href = "{% url 'index' %}";
-    });
-</script>
-  <script>
-<<<<<<< HEAD
-    // Assuming you have a variable 'loginSuccess' that indicates successful login
-    if (loginSuccess) {
-      // Wait for 3 seconds (3000 milliseconds) before redirecting
-      setTimeout(function () {
-        // Redirect to the index page
-        window.location.href = "{% url 'index' %}";
-
-        // Display a welcome message
-        alert("Welcome, Siva!");
-      }, 3000);
-    }
-  </script>
-=======
-      // Check if the gas_station_owner checkbox was selected during signup
-      const isGasStationOwner = localStorage.getItem('gas_station_owner_selected');
->>>>>>> f509a6b0 (Users and  owners pages updated)
-
-      // Show/hide buttons based on the checkbox selection
-      window.onload = function () {
-          if (isGasStationOwner) {
-              // Show only the Gas Station Owner button
-              document.getElementById('submit-button').style.display = 'none';
-              document.getElementById('cancel-button').style.display = 'block';
-          } else {
-              // Show only the Customer button
-              document.getElementById('submit-button').style.display = 'block';
-              document.getElementById('cancel-button').style.display = 'none';
-          }
-      };
-
-      document.getElementById('login-form').addEventListener('submit', function() {
-          // Your logic to display the success message here
-          document.getElementById('success-message').style.display = 'block';
-      });
-
-      document.getElementById('cancel-button').addEventListener('click', function() {
-          window.location.href = "{% url 'index' %}";
-      });
-  </script>
 
 </body>
 

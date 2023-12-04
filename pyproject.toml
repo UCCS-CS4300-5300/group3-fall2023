@@ -11,5 +11,9 @@ version = "0.1.0"
 [tool.poetry.dependencies]
 python = "^3.8"
 
+
 Django = "^3.0"
+
+Redberry = "^0.0.7"
+
 [tool.poetry.dev-dependencies]

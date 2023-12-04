@@ -1,50 +1,13 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 {% load static %}
-  <style>
-    body {
-        background-color: #f0f0f0; 
-    }
-    header {
-         background-color: #ffa200;
-         line-height: 10px;
-         padding: 10px;
-     }
-    h1 {
-        display: flex;
-        align-items: center;
-    }
-    h1 img {
-        margin-right: 10px; 
-    }
-    .footer {
-        background-color: blue; 
-        color: white; 
-        padding: 10px; 
-        text-align: center; 
-    }
-    #submit-button {
-        /*background-color: #4CAF50;*/
-        /*color: white;*/
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-    }
-    #cancel-button {
-        /*background-color: #f44336;*/ 
-        /*color: white;*/
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-    }
-</style>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Sprint 0_3</title>
     <link rel="stylesheet" href= "{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'assets/css/styles.min.css' %}">
+    <!--<link rel="stylesheet" href="assets/css/Contact-FormModal-Contact-Form-with-Google-Map.css"> -->
 </head>
 
 <body style="background: linear-gradient(180deg, var(--bs-primary-bg-subtle) 80%, var(--bs-primary-border-subtle) 100%);">
@@ -57,13 +20,13 @@
                     </svg></span><span class="focus-ring focus-ring-primary" style="font-weight: bold;font-size: 24px;">Fuel Buddy</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-4"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-4">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active fw-bold" href="{% url 'fueldemand'%}">Fuel Demand</a></li>
+                  <li class="nav-item"><a class="nav-link active fw-bold" href="{% url 'fueldemand'%}">Fuel Demand</a></li>
                     <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'about'%}">About Us</a></li>
-                  <li class="nav-item"><a class="nav-link fw-bold"href="{% url 'feedback'%}">Feedback Form</a></li>
+                  <li class="nav-item"><a class="nav-link active fw-bold"href="{% url 'feedback'%}">Feedback Form</a></li>
                 </ul>
                 <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Log In</button><button class="btn btn-primary" type="button">Sign Up</button></div>
             </div>
-            <div class="d-none d-md-block"><button class="btn btn-light me-2" type="button">Log In</button><a class="btn btn-primary" role="button" href="{% url 'signup' %}" style="background: rgb(12,57,84);">Sign Up</a></div>
+            <div class="d-none d-md-block"><button class="btn btn-light me-2" type="button">Log In</button><a class="btn btn-primary" role="button" href="#" style="background: rgb(12,57,84);">Sign Up</a></div>
         </div>
     </nav>
   <!--End Navbar-->
@@ -81,7 +44,7 @@
             </div>
         </div>
       
-         <form>
+        <form id="contactForm-1" action="javascript:void();" method="get"><input class="form-control" type="hidden" name="Introduction" value="This email was sent from www.mywebsite.com"><input class="form-control" type="hidden" name="subject" value="My Contact Form"><input class="form-control" type="hidden" name="to" value="email@mywebsite.com">
             <div class="row">
                 <div class="col-md-6">
                     <div id="successfail"></div>
@@ -90,50 +53,28 @@
             <div class="row">
                 <div class="col-md-6" id="message">
                     <fieldset>
-                        <legend><i class="fa fa-envelope"></i> Login</legend>
+                        <legend><i class="fa fa-envelope"></i> About Us</legend>
                     </fieldset>
-                
                     <hr>
+                  <p> Welcome to FUEL BUDDY! YOUR ULTIMATE GAS PRICE TRACKER app which is an online platform designed to assist customers/consumers in monitoring and comparing the fuel prices at various gas stations in their local area which is a reliable way to stay updated about the fluctuations in fuel prices. The app allows them to make choices that help save money on fuel and save time also with location-based search users can quickly find nearby gas stations with real-time price updates. The goal is to provide consumers with convenience while also encouraging price transparency and competition among gas stations. This application meets the demands of both consumers and fuel companies. It enables users to make more cost-effective decisions, save money and time. This application can help gas station owners by monitoring their competitors pricing strategies in real-time, ensuring they have an adequate supply of fuel on hand, responding to market changes, and understanding consumer preferences from feedback. 
+                  </p>
                 </div>
                 <div class="col-md-6">
                     <fieldset>
                         <legend> <i class="fa fa-location-arrow"></i>&nbsp;</legend>
                     </fieldset>
-                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="static-map"><a href="https://images.app.goo.gl/uQmYs9v1q3453MyS7" target="_blank"><img class="img-fluid" src="{% static 'assets/img/gas-station.jpg' %}" alt="Gas Station"></a></div>
+                        </div>  
+                    </div>
                 </div>
               <div>
+              
               </div>
             </div> 
-        </form> 
-		<form method="POST" action="{% url 'login' %}" id="login-form">
-			{% csrf_token %}
-			{{ form.as_p }}
-			 <div class="p-2">
-			  <input type="checkbox" name="customer" id="customer" />
-			  <label for="Customer">Customer</label>
-			  <input type="checkbox" name="gas_station_owner" id="gas_station_owner" />
-			  <label for="agree">Gas Station Owner</label>
-			</div>
-			<button class="btn btn-light" type="submit" id="submit-button">Login</button>
-			<button class="btn btn-danger" type="button" id="cancel-button">Back</button> 
-			<div>
-			  <p id="welcome-message" style="display: none;">Welcome, User!</p>
-			  <p>Don't have an Account? Create One!: <a href="{% url 'signup' %}">Sign Up</a></div> 
-		</form>
+        </form>
   <!-- End Form Body -->
-      {# Display messages here #}
-      {% if messages %}
-        <ul class="messages">
-          {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-
-      <div id="success-message" style="display: none;">
-         Logged in Successfully !!
-      </div>
-
     </div>
 
   
@@ -163,59 +104,6 @@
   
   <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
   <script src="{% static 'assets/js/script.min.js' %}"></script>
-  
-  <script>
-    document.getElementById('login-form').addEventListener('submit', function() {
-        // Your logic to display the success message here
-        document.getElementById('success-message').style.display = 'block';
-    });
-
-    document.getElementById("cancel-button").addEventListener("click", function() {
-        window.location.href = "{% url 'index' %}";
-    });
-</script>
-  <script>
-<<<<<<< HEAD
-    // Assuming you have a variable 'loginSuccess' that indicates successful login
-    if (loginSuccess) {
-      // Wait for 3 seconds (3000 milliseconds) before redirecting
-      setTimeout(function () {
-        // Redirect to the index page
-        window.location.href = "{% url 'index' %}";
-
-        // Display a welcome message
-        alert("Welcome, Siva!");
-      }, 3000);
-    }
-  </script>
-=======
-      // Check if the gas_station_owner checkbox was selected during signup
-      const isGasStationOwner = localStorage.getItem('gas_station_owner_selected');
->>>>>>> f509a6b0 (Users and  owners pages updated)
-
-      // Show/hide buttons based on the checkbox selection
-      window.onload = function () {
-          if (isGasStationOwner) {
-              // Show only the Gas Station Owner button
-              document.getElementById('submit-button').style.display = 'none';
-              document.getElementById('cancel-button').style.display = 'block';
-          } else {
-              // Show only the Customer button
-              document.getElementById('submit-button').style.display = 'block';
-              document.getElementById('cancel-button').style.display = 'none';
-          }
-      };
-
-      document.getElementById('login-form').addEventListener('submit', function() {
-          // Your logic to display the success message here
-          document.getElementById('success-message').style.display = 'block';
-      });
-
-      document.getElementById('cancel-button').addEventListener('click', function() {
-          window.location.href = "{% url 'index' %}";
-      });
-  </script>
-
 </body>
 
 </html>
