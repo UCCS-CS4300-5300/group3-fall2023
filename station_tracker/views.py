@@ -115,10 +115,14 @@ def update_gas_prices(request):
                   {"Gas_Price_Update_Form": Gas_Price_Update_Form})
 
 
+<<<<<<< HEAD
 def feedback_form(request):
     return render(request, 'feedback.html')
 
 
+=======
+  
+>>>>>>> b6701ccbe2950283da77a7fcfa73d933953a808e
 def render_feedback_form(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
@@ -163,6 +167,7 @@ def map_view(request):
     return render(request, 'station-tracker.html', context)
 
 
+<<<<<<< HEAD
 def user_about(request):
     return render(request, 'about.html')
 
@@ -421,3 +426,13 @@ def delete_gas_station(request, gas_station_id):
         return redirect('gas_stations')
     else:
         return gas_station_form(request, 'delete', gas_station)
+=======
+def user_fueldemand(request):
+  return render(request, 'fueldemand.html')
+
+def user_stationowner(request):
+  return render(request, 'stationowner.html')
+
+def user_payment(request):
+  return render(request, 'payment.html')
+>>>>>>> b6701ccbe2950283da77a7fcfa73d933953a808e

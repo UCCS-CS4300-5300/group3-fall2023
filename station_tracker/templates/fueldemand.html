@@ -1,17 +1,70 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 {% load static %}
+  <style>
+    body {
+        background-color: #f0f0f0; 
+    }
+    header {
+         background-color: #ffa200;
+         line-height: 10px;
+         padding: 10px;
+     }
+    h1 {
+        display: flex;
+        align-items: center;
+    }
+    h1 img {
+        margin-right: 10px; 
+    }
+    .footer {
+        background-color: blue; 
+        color: white; 
+        padding: 10px; 
+        text-align: center; 
+    }
+    #submit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+    #cancel-button {
+        background-color: #f44336; 
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+    #wp-block-button__link {
+        background: #0397a9;
+        font-weight: 600;
+        padding: 8px 24px;
+        border: none;
+        border-radius: 28px;
+        box-shadow: none;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 18px;
+        margin: 0;
+        text-align: center;
+        text-decoration: none;
+        overflow-wrap: break-word;
+    }
+    
+</style>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Sprint 0_3</title>
     <link rel="stylesheet" href= "{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'assets/css/styles.min.css' %}">
-    <!--<link rel="stylesheet" href="assets/css/Contact-FormModal-Contact-Form-with-Google-Map.css"> -->
 </head>
 
 <body style="background: linear-gradient(180deg, var(--bs-primary-bg-subtle) 80%, var(--bs-primary-border-subtle) 100%);">
-  
+
   <!--Start Navbar-->
     <nav class="navbar navbar-expand-md bg-primary py-3" style="background: rgb(108,117,125);">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="{% url 'home'%}"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: rgb(12,57,84);"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-fuel-pump">
@@ -20,13 +73,13 @@
                     </svg></span><span class="focus-ring focus-ring-primary" style="font-weight: bold;font-size: 24px;">Fuel Buddy</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-4"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-4">
                 <ul class="navbar-nav me-auto">
-                  <li class="nav-item"><a class="nav-link active fw-bold" href="{% url 'fueldemand'%}">Fuel Demand</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold" href="{% url 'fueldemand'%}">Fuel Demand</a></li>
                     <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'about'%}">About Us</a></li>
                   <li class="nav-item"><a class="nav-link active fw-bold"href="{% url 'feedback'%}">Feedback Form</a></li>
                 </ul>
                 <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Log In</button><button class="btn btn-primary" type="button">Sign Up</button></div>
             </div>
-            <div class="d-none d-md-block"><button class="btn btn-light me-2" type="button">Log In</button><a class="btn btn-primary" role="button" href="#" style="background: rgb(12,57,84);">Sign Up</a></div>
+            <div class="d-none d-md-block"><button class="btn btn-light me-2" type="button">Log In</button><a class="btn btn-primary" role="button" href="{% url 'signup' %}" style="background: rgb(12,57,84);">Sign Up</a></div>
         </div>
     </nav>
   <!--End Navbar-->
@@ -43,41 +96,78 @@
                 </div>
             </div>
         </div>
-      
-        <form id="contactForm-1" action="javascript:void();" method="get"><input class="form-control" type="hidden" name="Introduction" value="This email was sent from www.mywebsite.com"><input class="form-control" type="hidden" name="subject" value="My Contact Form"><input class="form-control" type="hidden" name="to" value="email@mywebsite.com">
+
+         <form id="contactForm-1" action="javascript:void();" method="get"><input class="form-control" type="hidden">
             <div class="row">
                 <div class="col-md-6">
                     <div id="successfail"></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6" id="message">
+                <div class="col-md-12" id="message">
                     <fieldset>
-                        <legend><i class="fa fa-envelope"></i> About Us</legend>
+                        <legend><i class="fa fa-envelope"></i> <h3>Fuel Demand, EIA Prediction and Pricing Data</h3> <br>
+                          <h4>FUEL BUDDY EIA IMPLIED GASOLINE DEMAND PREDICTION</h4> <br>
+                         <h6>Fuel Buddy develops and maintains proprietary predictive models for U.S. gasoline demand published by the EIA. To inquire about obtaining this dataset, please email our team @fuelbuddy.com.</h6> </legend>
+
+                     <center><h5> <b>Prior Fuel Buddy Fuel Demand Reports</b>  </h5></center> 
                     </fieldset>
+
                     <hr>
-                  <p> Welcome to FUEL BUDDY! YOUR ULTIMATE GAS PRICE TRACKER app which is an online platform designed to assist customers/consumers in monitoring and comparing the fuel prices at various gas stations in their local area which is a reliable way to stay updated about the fluctuations in fuel prices. The app allows them to make choices that help save money on fuel and save time also with location-based search users can quickly find nearby gas stations with real-time price updates. The goal is to provide consumers with convenience while also encouraging price transparency and competition among gas stations. This application meets the demands of both consumers and fuel companies. It enables users to make more cost-effective decisions, save money and time. This application can help gas station owners by monitoring their competitors pricing strategies in real-time, ensuring they have an adequate supply of fuel on hand, responding to market changes, and understanding consumer preferences from feedback. 
-                  </p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <fieldset>
                         <legend> <i class="fa fa-location-arrow"></i>&nbsp;</legend>
                     </fieldset>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="static-map"><a href="https://images.app.goo.gl/uQmYs9v1q3453MyS7" target="_blank"><img class="img-fluid" src="{% static 'assets/img/gas-station.jpg' %}" alt="Gas Station"></a></div>
-                        </div>  
-                    </div>
+
                 </div>
               <div>
-              
               </div>
             </div> 
-        </form>
+        </form> 
+    <form method="POST" action="{% url 'fueldemand' %}" id="fueldemand-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="wp-block-columns" class="col-md-6">
+      <div class="wp-block-column">
+      <div class="wp-block-media-text alignwide is-stacked-on-mobile">
+      <figure class="wp-block-media-text__media"></figure>
+      <div class="wp-block-media-text__content">
+      <p class="has-normal-font-size"><strong>Fuel Demand Report</strong></p>
+      <div class="wp-block-button"><a class="wp-block-button__link" href="https://www.eia.gov/petroleum/weekly/gasoline.php" target="_blank" rel="noopener noreferrer"><img class="wp-image-15932" src="{% static 'assets/img/weekly-report.png' %}" sizes="(max-width: 400px) 100vw, 400px" alt="">View Report</a></div>
+      </div>
+      </div>
+      </div>
+      <br>
+      <div class="wp-block-column"  
+      <div class="wp-block-media-text alignwide is-stacked-on-mobile">
+      <div class="wp-block-media-text__content">
+      <p class="has-normal-font-size"><strong>Gasoline Fuel Update</strong></p>
+      <div class="wp-block-button"><a class="wp-block-button__link" href="https://www.eia.gov/petroleum/gasdiesel/" target="_blank" rel="noopener noreferrer"><img class="img-fluid" src="{% static 'assets/img/fuel-trend.png' %}" alt="Fuel Trend">View Report</a></div>
+      </div>
+      </div>
+      </div>
+      </div>
+    <!--  <button type="submit" id="submit-button">Login</button>
+      <button type="button" id="cancel-button">Back</button> --> 
+    </form>
   <!-- End Form Body -->
+      {# Display messages here #}
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <div id="success-message" style="display: none;">
+         Logged in Successfully !!
+      </div>
+
     </div>
 
-  
+
 <!-- Start Footer -->
   <footer class="text-center">
       <div class="container text-muted py-4 py-lg-5">
@@ -101,9 +191,10 @@
       </div>
   </footer>
   <!-- End Footer -->
-  
+
   <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
   <script src="{% static 'assets/js/script.min.js' %}"></script>
+
 </body>
 
 </html>

@@ -104,6 +104,7 @@ class GasPriceUpdateForm(forms.ModelForm):
         ]
 
 
+<<<<<<< HEAD
 class FeedbackForm(ModelForm):
     class Meta:
         model = Feedback
@@ -183,3 +184,17 @@ class CustomerInquiryForm(forms.ModelForm):
             'gas_station', 'sender_name', 'sender_email', 'message_text',
             'status'
         ]
+=======
+class FeedbackForm(forms.ModelForm):
+  class Meta:
+    model = Feedback
+    fields = ['name', 'email', 'phone', 'comments', 'gasStationAddr']
+    widgets = {
+      'name' : forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Name', 'id':'name'}),
+      'email' : forms.EmailInput(attrs={'class': 'form-control', 'placeholder' : 'Email', 'id':'email'}),
+      'phone' : forms.NumberInput(attrs={'class': 'form-control', 'placeholder' : 'Phone Number', 'id':'phone'}),
+      'comments': Textarea(attrs= {'placeholder':'Leave a comment/review', 'class':'form-control', 'rows':'5', 'id':'comments'}),
+      'gasStationAddr' : forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Gas Station Address', 'id':'gasStationAddr'}),
+    }
+ 
+>>>>>>> b6701ccbe2950283da77a7fcfa73d933953a808e

@@ -59,6 +59,7 @@ class Gas_Station(models.Model):
 
 
 class Feedback(models.Model):
+<<<<<<< HEAD
     name = models.CharField(max_length=50)
     email = models.EmailField()
     phone = models.IntegerField()
@@ -161,3 +162,25 @@ class CustomerInquiry(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+=======
+  name = models.CharField(max_length=50)
+  email = models.EmailField()
+  phone = models.IntegerField()
+  comments = models.TextField()
+  gasStationAddr = models.CharField(max_length=200)
+
+  def __str__(self):
+    return self.name
+  
+      
+        # Model for the About Us page
+class AboutUs(models.Model):
+        # Fields for the About Us page
+        title = models.CharField(max_length=200)
+        content = models.TextField()
+        image = models.ImageField(upload_to='about_us_images/')
+        # Add any other fields you need for the About Us page
+
+    
+
+

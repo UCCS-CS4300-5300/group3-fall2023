@@ -57,7 +57,7 @@
                     </svg></span><span class="focus-ring focus-ring-primary" style="font-weight: bold;font-size: 24px;">Fuel Buddy</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-4"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-4">
                 <ul class="navbar-nav me-auto">
-                    <!--<li class="nav-item"><a class="nav-link fw-bold" href="#">First Item</a></li>-->
+                    <li class="nav-item"><a class="nav-link active fw-bold" href="{% url 'fueldemand'%}">Fuel Demand</a></li>
                     <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'about'%}">About Us</a></li>
                   <li class="nav-item"><a class="nav-link fw-bold"href="{% url 'feedback'%}">Feedback Form</a></li>
                 </ul>
@@ -81,7 +81,7 @@
             </div>
         </div>
       
-         <form id="contactForm-1" action="javascript:void();" method="get"><input class="form-control" type="hidden" name="Introduction" value="This email was sent from www.mywebsite.com"><input class="form-control" type="hidden" name="subject" value="My Contact Form"><input class="form-control" type="hidden" name="to" value="email@mywebsite.com">
+         <form>
             <div class="row">
                 <div class="col-md-6">
                     <div id="successfail"></div>
@@ -175,8 +175,23 @@
     });
 </script>
   <script>
+<<<<<<< HEAD
       // Check if the gas_station_owner checkbox was selected during signup
       const isGasStationOwner = localStorage.getItem('gas_station_owner_selected');
+=======
+    // Assuming you have a variable 'loginSuccess' that indicates successful login
+    if (loginSuccess) {
+      // Wait for 3 seconds (3000 milliseconds) before redirecting
+      setTimeout(function () {
+        // Redirect to the index page
+        window.location.href = "{% url 'index' %}";
+
+        // Display a welcome message
+        alert("Welcome, Siva!");
+      }, 3000);
+    }
+  </script>
+>>>>>>> b6701ccbe2950283da77a7fcfa73d933953a808e
 
       // Show/hide buttons based on the checkbox selection
       window.onload = function () {

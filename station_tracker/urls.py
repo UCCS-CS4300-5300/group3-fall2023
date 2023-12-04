@@ -14,13 +14,19 @@ urlpatterns = [
    path('signup/', views.user_signup, name='signup'),
    path('logout/', views.user_logout, name='logout'),
    path('update_gas_prices/', views.update_gas_prices, name="update_gas_prices"),
-   path('feedback/', views.feedback_form, name="feedback"),
    path('location_search/', searchViews.map_view, name = "findGas"),
    path('location_search/', include('location_search.urls')),
    path('feedback/', views.render_feedback_form, name="feedback"),
    path('station-tracker/', views.map_view, name="station-tracker"),
    path('about/', views.user_about, name="about"),
+<<<<<<< HEAD
 
+=======
+   path('fueldemand/', views.user_fueldemand, name="fueldemand"),
+   path('stationowner/', views.user_stationowner, name="stationowner"),
+   path('payment/', views.user_payment, name="payment"),
+]
+>>>>>>> b6701ccbe2950283da77a7fcfa73d933953a808e
 
 
 
