@@ -33,8 +33,6 @@ class MyTestCase(TestCase):
        #  response = client.get(reverse('logout'))
         # self.assertEqual(response.status_code, 302)  # 302 is the status code for a redirect
         # self.assertFalse(response.context['user'].is_authenticated)
-from django.test import TestCase, Client
-from django.urls import reverse
 
 class YourAppViewsTestCase(TestCase):
     def setUp(self):
