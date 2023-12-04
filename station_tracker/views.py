@@ -1,6 +1,6 @@
 from .models import Feedback, AboutUs, Gas_Station,GasStation  
 from geopy.geocoders import Nominatim
-from geopy.distance import geodes 
+from geopy.distance import GeodesicDistance
 import folium
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
