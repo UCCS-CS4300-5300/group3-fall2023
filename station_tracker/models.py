@@ -126,10 +126,8 @@ class GasStationOwner(models.Model):
     email = models.EmailField()
     business_address = models.CharField(max_length=255)
     emergency_contact = models.CharField(max_length=20, blank=True, null=True)
-    def __str__(self):
-      return self.owner_name
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='gas_station_owner', null=True)
+
 
     def __str__(self):
         return self.owner_name
