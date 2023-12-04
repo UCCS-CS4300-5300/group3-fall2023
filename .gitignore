@@ -1,5 +1,10 @@
+.config/
 venv/
-*__pycache__/
-*.sqlite3
-*.db
-
+.upm/
+/replit.nix
+/db.sqlite3
+__pycache__
+*.pyc
+token.txt
+.pytest_cache
+.coverage
