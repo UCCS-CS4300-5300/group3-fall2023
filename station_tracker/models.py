@@ -7,6 +7,8 @@ class Gas_Station(models.Model):
   latitude = models.FloatField()
   longitude = models.FloatField()
   regular_gas_price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+  address = models.CharField(max_length=100, default='UCCS')
+  #googleURL = models.CharField(max_length=100, default='UCCS')
   premium_gas_price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
   diesel_price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
   
