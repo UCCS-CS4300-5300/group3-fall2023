@@ -11,7 +11,7 @@ from geopy.distance import Geodesic
 import folium
 from folium import IFrame
 from .forms import SearchForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from station_tracker.models import Gas_Station
 import os
 
@@ -58,6 +58,44 @@ def searchPage(request):
 
     return render(request,'stuff.html', map_context)
 
+# def updatePrice(request, gas_station_id):
+#     return render(request, 'updatePrice.html')
+
+def updatePrice(request, gas_station_id):
+    gas_station = Gas_Station.objects.get(id=gas_station_id)
+    print(gas_station_id)
+
+    
+    if request.method == 'POST':
+       
+        U80 = request.POST.get('regular_gas_price', '')
+        U85 = request.POST.get('premium_gas_price', '')
+        Diesel = request.POST.get('diesel_price', '')
+
+        # Get the gas station from the database
+        gas_station = Gas_Station.objects.get(id=gas_station_id)
+
+        gas_station.regular_gas_price = U80
+        gas_station.premium_gas_price = U85
+        gas_station.diesel_price = Diesel
+
+        # Save the gas station
+        gas_station.save()
+
+        
+
+        # Save the gas station
+        gas_station.save()
+
+        return HttpResponseRedirect('/location_search/searchPage')
+
+    # If the request method is not POST, render the updatePrice.html template
+    context = {"gas_station":gas_station}
+    return render(request, 'updatePrice.html',context)
+
+   
+    
+
 #############################################
 #Google maps API functions
 def my_view(request):
@@ -95,30 +133,24 @@ def nearby_gas_search(location,radius, api_key):
 def gas_station_database(request, location, radius, api_key):
     # Get data from the Google Places API
     data = nearby_gas_search(location, radius, api_key)
-    #print(data)
-
-    
 
     # Iterate over each result in the data
     for result in data['results']:
-        # Create a new GasStation object
-
-        
-        gas_station = Gas_Station(
+        # Check if a GasStation object with the same station_name and address already exists
+        try:
+            gas_station = Gas_Station.objects.get(station_name=result['name'], address=result['vicinity'])
+        except Gas_Station.DoesNotExist:
+            # If it doesn't exist, create a new GasStation object
+            gas_station = Gas_Station(
             station_name=result['name'],
             address=result['vicinity'],
             latitude=result['geometry']['location']['lat'],
             longitude=result['geometry']['location']['lng'],
-            regular_gas_price = 0,
-            premium_gas_price = 0,
-            diesel_price = 0
-        )
+            
+            )
 
-        #print(gas_station)
-
-        # Save the GasStation object to the database
-        gas_station.save()
-
+            # Save the GasStation object to the database
+            gas_station.save()
 
     
 def map_view(request):
@@ -182,9 +214,16 @@ def map_viewSubmit(request, search, userRange):
         
         
         
-
+        gas_station_id = Gas_Station.objects.get(station_name=station.station_name, address=station.address)
         #Mark each gas station with marker and popup with station name and link to  google maps
-        folium.Marker(coords, tooltip = station.station_name + ": "+ station.address, popup = folium.Popup(f"<a href = http://maps.google.com/?q={station.address.replace(' ', '+')}>Directions</a>")).add_to(station_map)
+        folium.Marker(coords, tooltip = station.station_name + ": "+ station.address, popup = folium.Popup(f"<a href = http://maps.google.com/?q={station.address.replace(' ', '+')}>Directions</a><a href='updatePrice/{gas_station_id.id}' class='btn' target='_top'>Update gas prices</a><p>U-80: {station.regular_gas_price}</p><p>U-85: {station.premium_gas_price}</p><p>Diesel: {station.diesel_price}</p>"
+         )).add_to(station_map)
+
+
+   
+        #get gas station ID
+        #gas_station = Gas_Station.objects.get(station_name=station.station_name, address=station.address)
+        #print(gas_station, ": ", gas_station.id)
 
     context = {'map': station_map._repr_html_()}
     return context
