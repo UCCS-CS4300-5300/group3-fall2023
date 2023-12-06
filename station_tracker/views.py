@@ -144,6 +144,7 @@ def render_earn_rewards(request):
   if request == "POST":
     form = EarnRewardsForm(request.POST)
     if form.is_valid():
+      form.save()
       money_spent = form.cleaned_data['MoneySpent']
       print(money_spent)
 
