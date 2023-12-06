@@ -41,7 +41,7 @@ class FeedbackModelTest(TestCase):
       self.assertEqual(str(feedback), "Johnny Jones")
 
 
-class YourAppViewsTestCase(TestCase):
+class ViewsTestCase(TestCase):
   def setUp(self):
       pass
 
@@ -157,23 +157,21 @@ class FormsTests(TestCase):
       form = FeedbackForm(data)
       self.assertFalse(form.is_valid())
 
-
-
-class AboutUsModelTest(TestCase):
+class ModelTest(TestCase):
 
   def setUp(self):
       self.image = SimpleUploadedFile("test_image.jpg", b"file_content", content_type="image/jpeg")
       self.about_us = AboutUs.objects.create(
-          title="Test Title",
-          content="Test Content",
+          title="Title",
+          content="Content",
           image=self.image
       )
   
   def test_about_us_model(self):
       about_us_from_db = AboutUs.objects.get(id=self.about_us.id)
   
-      self.assertEqual(about_us_from_db.title, "Test Title")
-      self.assertEqual(about_us_from_db.content, "Test Content")
+      self.assertEqual(about_us_from_db.title, "Title")
+      self.assertEqual(about_us_from_db.content, "Content")
       self.assertNotEqual(about_us_from_db.image, "about_us_images/test_image.jpg")
   
   
