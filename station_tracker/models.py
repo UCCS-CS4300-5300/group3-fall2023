@@ -7,19 +7,27 @@ class Gas_Station(models.Model):
   latitude = models.FloatField()
   longitude = models.FloatField()
   regular_gas_price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+  address = models.CharField(max_length=100, default='UCCS')
+  #googleURL = models.CharField(max_length=100, default='UCCS')
   premium_gas_price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
   diesel_price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-  
+  GasUpdateId = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+
+    
   def __str__(self):
     return self.station_name
   
 class Feedback(models.Model):
-        name = models.CharField(max_length=50)
-        email = models.EmailField()
-        phone = models.IntegerField()
-        comments = models.TextField()
-        gasStationAddr = models.CharField(max_length=200)
-    
+  name = models.CharField(max_length=50)
+  email = models.EmailField()
+  phone = models.IntegerField()
+  comments = models.TextField()
+  gasStationAddr = models.CharField(max_length=200)
+
+  def __str__(self):
+    return self.name
+  
+      
         # Model for the About Us page
 class AboutUs(models.Model):
         # Fields for the About Us page
@@ -29,5 +37,4 @@ class AboutUs(models.Model):
         # Add any other fields you need for the About Us page
 
     
-def __str__(self):
-                return self.name
+

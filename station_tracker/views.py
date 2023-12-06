@@ -68,8 +68,6 @@ def update_gas_prices(request):
   Gas_Price_Update_Form = GasPriceUpdateForm()
   return render(request, 'update_gas_prices.html', {"Gas_Price_Update_Form": Gas_Price_Update_Form})
 
-def feedback_form(request):
-  return render(request, 'feedback.html')
   
 def render_feedback_form(request):
   if request.method == 'POST':

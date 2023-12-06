@@ -32,7 +32,7 @@ class GasPriceUpdateForm(forms.ModelForm):
       model = models.Gas_Station
       fields = ['regular_gas_price', 'premium_gas_price', 'diesel_price', 'station_name']
 
-class FeedbackForm(ModelForm):
+class FeedbackForm(forms.ModelForm):
   class Meta:
     model = Feedback
     fields = ['name', 'email', 'phone', 'comments', 'gasStationAddr']
