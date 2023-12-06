@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth import authenticate, login, logout 
-from .forms import UserCreationForm, LoginForm, GasPriceUpdateForm, FeedbackForm
+from .forms import UserCreationForm, LoginForm, GasPriceUpdateForm, FeedbackForm, EarnRewardsForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Feedback, AboutUs, Gas_Station
+from .models import Feedback, AboutUs, Gas_Station, UserRewards
 from django.http import HttpResponse
 from geopy.geocoders import Nominatim
 from geopy.distance import Geodesic
@@ -79,6 +79,47 @@ def render_feedback_form(request):
   else: 
     form = FeedbackForm()
   return render(request, 'feedback.html', {'form': form})
+  
+def render_rewards(request):
+  if request.user.is_authenticated:
+    user_session = request.user
+    rewards = UserRewards.objects.filter(user=user_session)
+    if not rewards:
+      reward = UserRewards.objects.create(user=user_session, points=0)
+      reward.save()
+
+    rewards = get_object_or_404(UserRewards, user=user_session)
+    context = {'user': request.user, 'rewards' : rewards,}
+    return render(request, 'rewards.html', context)
+  else:
+    return redirect('login')
+
+def render_earn_rewards(request):
+  form = EarnRewardsForm()
+  user_session = request.user
+  rewards = UserRewards.objects.filter(user=user_session)
+  if request == "POST":
+    form = EarnRewardsForm(request.POST)
+    if form.is_valid():
+      money_spent = form.cleaned_data['MoneySpent']
+      print(money_spent)
+
+        
+      money_spent = int(money_spent)
+      points_earned = money_spent / 2
+      print(points_earned)
+        
+      rewards = get_object_or_404(UserRewards, user=user_session)
+      print(rewards)
+      rewards.points = rewards.points + points_earned
+      rewards.save()
+      return redirect('rewards')
+
+  else: 
+      form = EarnRewardsForm()
+  return render(request, 'earn_rewards.html', {'form': form})
+
+
 
 def map_view(request):
     

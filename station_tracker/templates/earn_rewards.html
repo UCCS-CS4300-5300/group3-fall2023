@@ -17,83 +17,46 @@
                     </svg></span><span class="focus-ring focus-ring-primary" style="font-weight: bold;font-size: 24px;">Fuel Buddy</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-4"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-4">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'fueldemand'%}">Fuel Demand</a></li>
+                  <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'fueldemand'%}">Fuel Demand</a></li>
                     <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'about'%}">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link fw-bold"href="{% url 'feedback'%}">Feedback Form</a></li>
-                  <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'rewards' %}">Rewards</a></li>
+                  <li class="nav-item"><a class="nav-link fw-bold"href="{% url 'feedback'%}">Feedback Form</a></li>
+                  <li class="nav-item"><a class="nav-link active fw-bold" href="{% url 'rewards' %}">Rewards</a></li>
                 </ul>
-              <!--  <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button" href="{% url 'signup' %}" >Log In</button><button class="btn btn-primary" type="button" href="{% url 'login' %}" style="background: rgb(12,57,84);">Sign Up</button></div> -->
+              <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button" href="{% url 'signup' %}" >Log In</button><button class="btn btn-primary" type="button" href="{% url 'login' %}" style="background: rgb(12,57,84);">Sign Up</button></div>
             </div>
             <div class="d-none d-md-block"><a class="btn btn-primary" role="button" href="{% url 'login' %}" style="background: rgb(235, 238, 242); color: rgb(25, 28, 28);">Log In</a><a class="btn btn-primary" role="button" href="{% url 'signup' %}" style="background: rgb(12,57,84);">Sign Up</a><!--<a class="btn btn-primary" role="button" href="{% url 'logout' %}" style="background: rgb(12,57,84);">Log out</a>--></div>
         </div>
-       
-
     </nav>
-    <section>
-        <div data-bss-parallax-bg="true" style="height: 300px;opacity: 1;color: var(--bs-body-bg);backdrop-filter: opacity(1);filter: saturate(75%);
-background-image: url(&quot;{% static 'assets/img/gas-pumps.jpg' %}&quot;);
-background-position: center;background-size: cover;">
-            <div class="container h-100">
-                <div class="row h-100">
-                    <div class="col-md-6 col-lg-8 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center" style="text-shadow: 4px 0px 5px var(--bs-body-color);">
-                        <div style="max-width: 350px;">
-                            <h1 class="text-uppercase fw-bold" style="color: var(--bs-white);width: 362px;">Welcome to Your Ultimate Gas Price Tracker App</h1>
-                            <p class="my-3" style="backdrop-filter: opacity(1);color: var(--bs-white);">Need help finding gas for cheap? We've got you covered.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="py-4 py-xl-5">
-        <div class="container">
-            <div class="text-white bg-primary border rounded border-0 border-primary d-flex flex-column justify-content-between flex-lg-row p-4 p-md-5" style="box-shadow: 4px 2px 4px var(--bs-primary-text-emphasis);">
-                <div class="pb-2 pb-lg-1">
-                    <h2 class="fw-bold mb-2" style="text-shadow: 2px 0px var(--bs-primary-text-emphasis);">Find Gas Stations</h2>
-                    <p class="mb-0" style="font-size: 17px;">Quickly compare prices for gas stations near your location.</p>
-                </div>
-                <div class="my-2"><a class="btn btn-light fs-5 py-2 px-4" role="button" href="{% url 'findGas' %}">Find Gas Stations</a></div>
-            </div>
-        </div>
-    </section>
-  <section class="py-4 py-xl-5">
-      <div class="container">
-          <div class="text-white bg-primary border rounded border-0 border-primary d-flex flex-column justify-content-between flex-lg-row p-4 p-md-5" style="box-shadow: 4px 2px 4px var(--bs-primary-text-emphasis);">
-              <div class="pb-2 pb-lg-1">
-                  <h2 class="fw-bold mb-2" style="text-shadow: 2px 0px var(--bs-primary-text-emphasis);">Update a Price</h2>
-                  <p class="mb-0" style="font-size: 17px;">Update a gas station price near your location.</p>
-              </div>
-            <div class="my-2">
-              <a class="btn btn-light fs-5 py-2 px-4" role="button" href="{% url 'update_gas_prices' %}">Update Gas Price</a></div>
-            </div>
+  
+  <form id="contactForm-1" action="/earn_rewards/" method="post">
+    {% csrf_token %}
+      <div class="row">
+          <div class="col-md-6">
+              <div id="successfail"></div>
+          </div>
       </div>
-  </section>
-    <section class="py-4 py-xl-5">
-        <div class="container">
-            <div class="text-white bg-primary border rounded border-0 border-primary d-flex flex-column justify-content-between flex-lg-row p-4 p-md-5" style="box-shadow: 4px 2px 4px var(--bs-primary-text-emphasis);">
-                <div class="pb-2 pb-lg-1">
-                    <h2 class="fw-bold mb-2" style="text-shadow: 2px 0px var(--bs-primary-text-emphasis);">Rewards Program</h2>
-                    <p class="mb-0" style="font-size: 17px;">Sign up for our rewards, check your points, and redeem rewards for using our app</p>
-                </div>
-                <div class="my-2"><a class="btn btn-light fs-5 py-2 px-4" role="button" href="{% url 'rewards' %}">Go to Rewards</a></div>
-            </div>
-        </div>
-    </section>
-    <section class="py-4 py-xl-5">
-        <div class="container">
-            <div class="text-white bg-primary border rounded border-0 border-primary d-flex flex-column justify-content-between flex-lg-row p-4 p-md-5" style="box-shadow: 4px 2px 4px var(--bs-primary-text-emphasis);">
-                <div class="pb-2 pb-lg-1">
-                    <h2 class="fw-bold mb-2" style="text-shadow: 2px 0px var(--bs-primary-text-emphasis);">Have Feedback for Us?</h2>
-                    <p class="mb-0" style="font-size: 17px;">We'd love to hear any feedback needed to improve our services.</p>
-                </div>
-                <div class="my-2"><a class="btn btn-light fs-5 py-2 px-4" role="button" href="{% url 'feedback'%}">Submit Feedback</a></div>
-            </div>
-        </div>
-    </section>
+      <div class="row">
+          <div class="col-md-6" id="message">
+              <fieldset>
+                  <legend><i class="fa fa-envelope"></i> Earn Points Here!</legend>
+              </fieldset>
+              <!--<div class="form-group"><label class="form-label" for="Gas Station">Name</label></div> -->
+              <div class="form-group"><label class="form-label" for="email">Money Spent</label>{{ form.MoneySpent }}</div>
+              <div class="row">
+                  <div class="col-sm-6">
+                      <div class="form-group"><label class="form-label" for="reward_type">Next Reward: </label>{{ form.RewardType }}</div>
+                  </div>
+              </div>
+              <div class="form-group mb-3" style="margin: 2em;"><button class="btn btn-primary d-block w-100" type="submit">Earn Points! <i class="fa fa-chevron-circle-right"></i></button></div>
+              <hr>
+          </div>
+      </div>
+  </form>
+
     <footer class="text-center">
         <div class="container text-muted py-4 py-lg-5">
             <ul class="list-inline">
-              <li class="list-inline-item me-4"><a class="link-secondary" href="#">Link 1</a></li>
+                <li class="list-inline-item me-4"><a class="link-secondary" href="#">Link 1</a></li>
                 <li class="list-inline-item me-4"><a class="link-secondary" href="#">Link 2</a></li>
                 <li class="list-inline-item"><a class="link-secondary" href="#">Link 3</a></li>
             </ul>
@@ -113,18 +76,8 @@ background-position: center;background-size: cover;">
     </footer>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/script.min.js' %}"></script>
+    <script src="{% static 'assets/js/aos.min.js' %}"></script>
+    <script src="{% static 'assets/js/bs-init.js' %}"></script>
+    <script src="{% static 'assets/js/Contact-FormModal-Contact-Form-with-Google-Map-modal_contact.js' %}"></script>
 </body>
-
-<!--
-{% if request.user.is_authenticated %}
-  <p>{{ request.user.username }}</p>
-  <a href="{% url 'logout' %}">Logout</a>
-{% else %}
-  <a href="{% url 'login' %}">Login</a>
-  <a href="{% url 'signup' %}">Signup</a>
-{% endif %}
-
-<h1>Welcome!</h1> -->
-
-
 </html>

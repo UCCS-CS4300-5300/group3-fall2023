@@ -69,7 +69,9 @@ class YourAppViewsTestCase(TestCase):
 
 
 class FeedbackTestCases(TestCase):
-
+  def setUp(self):
+    pass
+    
   def test_successful_submit(self):
     client = Client()
     response = client.post(reverse('feedback'), {'name': 'test', 'email': 'tzirw@example.com', 'phone': '1234567890', 'comments': 'test comments', 'gasStationAddr': '123 AnyPlace'})
@@ -80,3 +82,31 @@ class FeedbackTestCases(TestCase):
     response = client.post(reverse('feedback'), {'email': 'tzirw@example.com', 'phone': '1234567890', 'comments': 'test comments', 'gasStationAddr': '123 AnyPlace'})
     self.assertFormError(response, 'form', 'name', 'This field is required.')
 
+  def test_missing_email(self):
+    client = Client()
+    response = client.post(reverse('feedback'), {'name': 'test', 'phone': '1234567890', 'comments': 'test comments', 'gasStationAddr' : '123 AnyPlace'})
+    self.assertFormError(response, 'form', 'email', 'This field is required.')
+
+  def test_invalid_email(self):
+    client = Client()
+    response = client.post(reverse('feedback'), {'name': 'test', 'email': 'test', 'phone': '1234567890', 'comments': 'test comments', 'gasStationAddr': '123 AnyPlace'})
+    self.assertFormError(response, 'form', 'email', 'Enter a valid email address.')
+
+  def test_missing_phone(self):
+    client = Client()
+    response = client.post(reverse('feedback'), {'name': 'test', 'email': 'tzirw@example.com', 'comments': 'test comments', 'gasStationAddr': '123 AnyPlace'})
+    self.assertFormError(response, 'form', 'phone', 'This field is required.')
+
+  def test_missing_address(self):
+    client = Client()
+    response = client.post(reverse('feedback'), {'name': 'test', 'email': 'tzirw@example.com', 'comments': 'test comments'})
+    self.assertFormError(response, 'form', 'gasStationAddr', 'This field is required.')
+
+  def test_missing_comments(self):
+    client = Client()
+    response = client.post(reverse('feedback'), {'name': 'test', 'email': 'tzirw@example.com', 'phone': '1234567890', 'gasStationAddr': '123 AnyPlace'})
+    self.assertFormError(response, 'form', 'comments', 'This field is required.')
+    
+
+#class UserTestCases(TestCase):
+  

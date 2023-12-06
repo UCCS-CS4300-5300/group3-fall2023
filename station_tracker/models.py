@@ -33,4 +33,17 @@ class AboutUs(models.Model):
         # Add any other fields you need for the About Us page
 
     
+class UserRewards(models.Model):
+  user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+  points = models.IntegerField(default=0)
+
+class RewardTypes(models.Model):
+  RewardType = models.CharField(max_length=200)
+  RewardPointsAmount = models.IntegerField()
+  RewardDescription = models.TextField()
+  
+class EarnRewards(models.Model):
+  GasStation = models.ForeignKey(Gas_Station, on_delete=models.CASCADE)
+  MoneySpent = models.IntegerField(default=0)
+  RewardType = models.ForeignKey(RewardTypes, on_delete=models.CASCADE)
 

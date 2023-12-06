@@ -20,5 +20,7 @@ urlpatterns = [
    path('fueldemand/', views.user_fueldemand, name="fueldemand"),
    path('stationowner/', views.user_stationowner, name="stationowner"),
    path('payment/', views.user_payment, name="payment"),
+   path('rewards/', views.render_rewards, name="rewards"),
+   path('earn_rewards/', views.render_earn_rewards, name="earn_rewards"),
 ]
 
