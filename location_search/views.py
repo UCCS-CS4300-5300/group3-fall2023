@@ -19,7 +19,7 @@ import os
 
 
 
-
+#Submit on main page, updates search and is the core of functionality
 def submit(request):
     if request.method == 'POST':
         # This is where you handle the POST request and save data to your database
@@ -36,17 +36,20 @@ def submit(request):
         locationInfo = geocode(search,my_secret)
 
         lat_lng = locationInfo['results'][0]['geometry']['location']
-        print(lat_lng)
-
-
         
-        gas_station_database(request, lat_lng, 7000,my_secret)
-        request.session['map_context'] = map_viewSubmit(request, search, range)
+
+
+        #Convert miles to meters and then pass to the API make database entries
+        apiRange = convToRange(range) * 1609.34
+        gas_station_database(request, lat_lng, apiRange,my_secret)
+        request.session['map_context'] = map_viewSubmit(request, search, range,searchPref)
 
         
         
     return redirect("searchPage")    
 
+
+#TBH im not entirely sure what this does
 def searchPage(request):
     
 
@@ -58,9 +61,8 @@ def searchPage(request):
 
     return render(request,'stuff.html', map_context)
 
-# def updatePrice(request, gas_station_id):
-#     return render(request, 'updatePrice.html')
 
+#Price Update method
 def updatePrice(request, gas_station_id):
     gas_station = Gas_Station.objects.get(id=gas_station_id)
     print(gas_station_id)
@@ -82,12 +84,9 @@ def updatePrice(request, gas_station_id):
         # Save the gas station
         gas_station.save()
 
-        
+    
 
-        # Save the gas station
-        gas_station.save()
-
-        return HttpResponseRedirect('/location_search/searchPage')
+        return redirect('findGas')
 
     # If the request method is not POST, render the updatePrice.html template
     context = {"gas_station":gas_station}
@@ -111,7 +110,7 @@ def geocode(address, api_key):
     }
     response = requests.get(base_url, params=params)
     return response.json()
-    
+#Gets nearby gas stations
 def nearby_gas_search(location,radius, api_key):
     base_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 
@@ -152,29 +151,58 @@ def gas_station_database(request, location, radius, api_key):
             # Save the GasStation object to the database
             gas_station.save()
 
-    
+#Initital map rendering 
+#returns render
 def map_view(request):
     
     geolocator = Nominatim(timeout=10, user_agent="Fuel Buddy")
     location = 'Colorado'
     
     stations =  Gas_Station.objects.all()
-    
-    location = "Colorado springs" # For testing, doesn't need structure so it can be any address string. zipcodes seem to be the most accurate though.
 
-    locator = geolocator.geocode(location) # converts addresses to coordinates
+    #Default location co springs, else location is the last search location
+    location = request.session.get('location', 'Colorado Springs')
+    
+    #Convert adress to latttitude and longitude
+    my_secret = os.environ['api_key']
+    locationInfo = geocode(location,my_secret)
+    lat_lng = locationInfo['results'][0]['geometry']['location']
+    lat = lat_lng['lat']
+    lng = lat_lng['lng']
+    
     if location == 'Colorado':
-        station_map = folium.Map(location=[locator.latitude, locator.longitude], zoom_start=8)
+        station_map = folium.Map(location=[lat, lng], zoom_start=8)
     else:
-        station_map = folium.Map(location=[locator.latitude, locator.longitude], zoom_start=13)
+        station_map = folium.Map(location=[lat, lng], zoom_start=13)
 
     
-    folium.Marker([locator.latitude, locator.longitude], icon = folium.Icon(color='red')).add_to(station_map)
-    folium.Circle([locator.latitude, locator.longitude], radius=16090/2).add_to(station_map) # distance is in meters, multiply by 1609 for conversion to miles. 
+    folium.Marker([lat, lng], icon = folium.Icon(color='red')).add_to(station_map)
+    folium.Circle([lat, lng], radius=16090/2).add_to(station_map) # distance is in meters, multiply by 1609 for conversion to miles. 
 
     for station in stations:
         coords = (station.latitude, station.longitude)
-        folium.Marker(coords).add_to(station_map)
+
+
+        
+
+
+
+
+        gas_station_id = Gas_Station.objects.get(station_name=station.station_name, address=station.address)
+        #Mark each gas station with marker and popup with station name and link to  google maps
+        icon_text = station.regular_gas_price
+
+        folium.Marker(coords, tooltip = station.station_name + ": "+ station.address, popup = folium.Popup(f"<a href = http://maps.google.com/?q={station.address.replace(' ', '+')}>Directions</a><a href='updatePrice/{gas_station_id.id}' class='btn' target='_top'>Update gas prices</a><p>U-80: {station.regular_gas_price}</p><p>U-85: {station.premium_gas_price}</p><p>Diesel: {station.diesel_price}</p>"
+         ),icon = folium.DivIcon(html=f"""<div style="background-color: #3333cc;
+        border-radius: 50%;
+        color: white;
+        font-weight: bolder;
+        font-family: courier new;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;">{icon_text}</div>""")).add_to(station_map)
 
     context = {'map': station_map._repr_html_()}
 
@@ -184,58 +212,88 @@ def map_view(request):
     
     return render(request, 'stuff.html', context)
 
-def map_viewSubmit(request, search, userRange):
+
+#After search rendering
+#returns dictionary
+def map_viewSubmit(request, search, userRange, searchPref):
 
     geolocator = Nominatim(timeout=10, user_agent="Fuel Buddy")
     location = 'Colorado'
 
     stations =  Gas_Station.objects.all()
 
-    location = search # For testing, doesn't need structure so it can be any address string. zipcodes seem to be the most accurate though.
+    location = search 
 
-    locator = geolocator.geocode(location) # converts addresses to coordinates
+    request.session['location'] = str(location)
+
+    #Get lattitude and longitude from google maps api
+    my_secret = os.environ['api_key']
+    locationInfo = geocode(location,my_secret)
+    lat_lng = locationInfo['results'][0]['geometry']['location']
+    lat = lat_lng['lat']
+    lng = lat_lng['lng']
+    
     if location == 'Colorado':
-        station_map = folium.Map(location=[locator.latitude, locator.longitude], zoom_start=8)
+        station_map = folium.Map(location=[lat, lng], zoom_start=8)
     else:
-        station_map = folium.Map(location=[locator.latitude, locator.longitude], zoom_start=13)
+        station_map = folium.Map(location=[lat, lng], zoom_start=13)
 
     #Convert user string to int, and convert it to meters
     range = convToRange(userRange) * 1609
 
 
-    folium.Marker([locator.latitude, locator.longitude], icon = folium.Icon(color='red')).add_to(station_map)
-    folium.Circle([locator.latitude, locator.longitude], radius=range/2).add_to(station_map)
-                  # distance is in meters, multiply by 1609 for conversion to miles. 
+    folium.Marker([lat, lng], icon = folium.Icon(color='red')).add_to(station_map)
+    folium.Circle([lat, lng], radius=range/2).add_to(station_map)
+                  # distance is in meters, multiply by 1609 for conversion to miles.
+    
 
     for station in stations:
         
         coords = (station.latitude, station.longitude)
+
+        icon_text = ""
+
+        #Updates each marker with chosen gas prices
+        if searchPref == 'U-80' and station.regular_gas_price is not None:
+            icon_text = station.regular_gas_price
+        elif searchPref == 'U-85' and station['premium_gas_price'] is not None:
+            icon_text = station['premium_gas_price']
+        elif searchPref == 'Diesel' and station['diesel_price'] is not None:
+            icon_text = station['diesel_price']
+        else:
+            icon_text = 'N/A'  
         
         
         
         
         gas_station_id = Gas_Station.objects.get(station_name=station.station_name, address=station.address)
         #Mark each gas station with marker and popup with station name and link to  google maps
+
+
         folium.Marker(coords, tooltip = station.station_name + ": "+ station.address, popup = folium.Popup(f"<a href = http://maps.google.com/?q={station.address.replace(' ', '+')}>Directions</a><a href='updatePrice/{gas_station_id.id}' class='btn' target='_top'>Update gas prices</a><p>U-80: {station.regular_gas_price}</p><p>U-85: {station.premium_gas_price}</p><p>Diesel: {station.diesel_price}</p>"
-         )).add_to(station_map)
+         ),icon = folium.DivIcon(html=f"""<div style="background-color: #3333cc;
+        border-radius: 50%;
+        color: white;
+        font-weight: bolder;
+        font-family: courier new;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;">{icon_text}</div>""")).add_to(station_map)
 
-
-   
-        #get gas station ID
-        #gas_station = Gas_Station.objects.get(station_name=station.station_name, address=station.address)
-        #print(gas_station, ": ", gas_station.id)
 
     context = {'map': station_map._repr_html_()}
     return context
 
 def convToRange(userRange):
-    if userRange == '5 Miles':
+    if userRange == '2.5 Miles':
+        return 2.5
+    elif userRange == '5 Miles':
         return 5
-    elif userRange == '10 Miles':
-        return 10
     elif userRange == '20 Miles':
-        return 20
+        return 20 
     else:
-        return 10
+        return 5
 
 
