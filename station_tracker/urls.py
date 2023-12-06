@@ -1,8 +1,8 @@
-
 from django.urls import path, include
 from location_search import views as searchViews
 from .views import index, main
 from . import views
+from django.contrib import admin
 
 urlpatterns = [
    path('', views.index, name='home'),
