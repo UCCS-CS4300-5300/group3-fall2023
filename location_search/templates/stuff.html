@@ -8,6 +8,8 @@
     <link rel="stylesheet" href= "{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/styles.min.css' %}">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
     <style>
         /*Search bar*/
         body{
@@ -137,8 +139,25 @@
                 <!-- Search bar from https://bbbootstrap.com/snippets/bootstrap-5-search-bar-microphone-icon-inside-12725910 -->
               <div class="form">
                     <i class="fa fa-search"></i>
-                    <input name = "location" type="text" class="form-control form-input" placeholder="Search by address, city or state">
+                    <input id = "autocomplete" name = "location" type="text" class="form-control form-input" placeholder="Search by address, city or state">
                     <span class="left-pan"><i class="fa fa-microphone"></i></span>
+                
+                  <script>
+                      function initAutocomplete() {
+                          autocomplete = new google.maps.places.Autocomplete(
+                              document.getElementById('autocomplete'), {
+                                  types: ['establishment'],
+                                  componentRestrictions: {'country': ["US"]},
+                                  fields: ['place_id', 'geometry', 'name']
+                              }
+                          );
+                      }
+                  </script>
+
+                  <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places&callback=initAutocomplete" async defer></script>
+
+
+                  
                   </div>
                     <section class="py-4 py-xl-3">
                         <div class="container">
@@ -154,20 +173,21 @@
                                 <div class="dropdown">
                                     <button id = "dropdownButton" class="dropbtn btn btn-light fs-5 py-2 px-4 my-2">Select range</button>
                                     <div class="dropdown-content">
-                                        <a href="#" onclick="changeText('0-5 Miles')">0-5 Miles</a>
-                                        <a href="#" onclick="changeText('0-10 Miles')">0-10 Miles</a>
-                                        <a href="#" onclick="changeText('0-20 Miles')">0-20 Miles</a>
+                                        <a style="color: black;" onclick="changeText('2.5 Miles')">0-2.5 Miles</a>
+                                        <a style="color: black;" onclick="changeText('5 Miles')">0-5 Miles</a>
+                                        <a style="color: black;" onclick="changeText('7.5 Miles')">0-7.5 Miles</a>
                                     </div>
                                   </div>
                             </div>
                         </div>
-                      <script>
-                                        function changeText(text) {
-                                          document.getElementById('dropdownButton').innerText = text;
-                                          document.getElementById('rangeSelect').value = text;
-                                      }
-                      </script>
                     </section>
+
+                  <script>
+                                      function changeText(text) {
+                                        document.getElementById('dropdownButton').innerText = text;
+                                        document.getElementById('rangeSelect').value = text;
+                                    }
+                    </script>
                   
                     <section class="py-4 py-xl-3">
                                       <div class="container">
@@ -175,17 +195,15 @@
                                               <div class="pb-1 pb-lg-0">
                                                   <h1 class="fw-bold mb-1" style="text-shadow: 2px 0px var(--bs-primary-text-emphasis);">Fuel Type</h1>
 
-
-
                                               </div>
                                               <!-- Dropdown from https://www.w3schools.com/howto/howto_css_dropdown.asp -->
                                               <input type = "hidden" id = "gasSelect" name = "gasType"> 
                                               <div class="dropdown">
                                                   <button id = "dropdownButton1" class="dropbtn btn btn-light fs-5 py-2 px-4 my-2">Select Fuel Type</button>
                                                   <div class="dropdown-content">
-                                                      <a href="#"onclick="changeText1('Diesel')">Diesel</a>
-                                                      <a href="#" onclick="changeText1('0-80')">0-80</a>
-                                                      <a href="#" onclick="changeText1('0-85')">0-85</a>
+                                                      <a style="color: black;"  onclick="changeText1('Diesel')">Diesel</a>
+                                                      <a style="color: black;" onclick="changeText1('0-80')">0-80</a>
+                                                      <a style="color: black;" onclick="changeText1('0-85')">0-85</a>
                                                   </div>
                                                 </div>
                                           </div>
@@ -209,9 +227,9 @@
                                                   <div class="dropdown">
                                                       <button id = "dropdownButton2" class="dropbtn btn btn-light fs-5 py-2 px-4 my-2">Search by</button>
                                                       <div class="dropdown-content">
-                                                          <a href="#" onclick="changeText2('Price: Low to high')">Price: Low to high</a>
-                                                          <a href="#" onclick="changeText2('Price: High to low')">Price: High to low</a>
-                                                          <a href="#" onclick="changeText2('Location: Closest')">Location: Closest</a>
+                                                          <a style="color: black;" onclick="changeText2('U-80')">U-80</a>
+                                                          <a style="color: black;" onclick="changeText2('U-85')">U-85</a>
+                                                          <a style="color: black;" onclick="changeText2('Diesel')">Diesel</a>
                                                       </div>
                                                     </div>
                                               </div>
