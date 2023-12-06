@@ -20,6 +20,11 @@ urlpatterns = [
    path('fueldemand/', views.user_fueldemand, name="fueldemand"),
    path('stationowner/', views.user_stationowner, name="stationowner"),
    #path('create_checkout_session/', views.create_checkout_session, name="checkout"),
+   path('payment/', views.user_payment, name='payment'),
+   path('map/', views.map_view, name='map_view'),
+   path('payment/', views.user_payment, name='user_payment'),
+
+
 
 ]
 
