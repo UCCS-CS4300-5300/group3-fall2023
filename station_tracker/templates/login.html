@@ -18,22 +18,12 @@
     h1 img {
         margin-right: 10px; 
     }
-    .footer {
-        background-color: blue; 
-        color: white; 
-        padding: 10px; 
-        text-align: center; 
-    }
     #submit-button {
-        /*background-color: #4CAF50;*/
-        /*color: white;*/
         padding: 10px 20px;
         border: none;
         cursor: pointer;
     }
     #cancel-button {
-        /*background-color: #f44336;*/ 
-        /*color: white;*/
         padding: 10px 20px;
         border: none;
         cursor: pointer;
@@ -45,6 +35,13 @@
     <title>Sprint 0_3</title>
     <link rel="stylesheet" href= "{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'assets/css/styles.min.css' %}">
+     <style>
+           /* Hide login and signup buttons on larger screens */
+           .btn{
+               display: none;
+           }
+         }
+     </style>
 </head>
 
 <body style="background: linear-gradient(180deg, var(--bs-primary-bg-subtle) 80%, var(--bs-primary-border-subtle) 100%);">
@@ -63,7 +60,7 @@
                 </ul>
                 <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Log In</button><button class="btn btn-primary" type="button">Sign Up</button></div>
             </div>
-            <div class="d-none d-md-block"><button class="btn btn-light me-2" type="button">Log In</button><a class="btn btn-primary" role="button" href="{% url 'signup' %}" style="background: rgb(12,57,84);">Sign Up</a></div>
+            <div class="d-none d-md-block"><button class="btn btn-light me-2" type="button">Log In</button><a class="btn btn-primary" role="button" href="{% url 'signup' %}" style="background: rgb(12,57,84);">Sign Up</a></div> 
         </div>
     </nav>
   <!--End Navbar-->
@@ -108,14 +105,16 @@
 		<form method="POST" action="{% url 'login' %}" id="login-form">
 			{% csrf_token %}
 			{{ form.as_p }}
-			 <div class="p-2">
-			  <input type="checkbox" name="customer" id="customer" />
-			  <label for="Customer">Customer</label>
-			  <input type="checkbox" name="gas_station_owner" id="gas_station_owner" />
-			  <label for="agree">Gas Station Owner</label>
-			</div>
-			<button class="btn btn-light" type="submit" id="submit-button">Login</button>
-			<button class="btn btn-danger" type="button" id="cancel-button">Back</button> 
+     <!-- <div>
+          <input type="radio" name="user_type" id="customerRadio" value="customer">
+          <label for="customerRadio">Customer</label>
+
+          <input type="radio" name="user_type" id="gasStationOwnerRadio" value="gas_station_owner">
+          <label for="gasStationOwnerRadio">Gas Station Owner</label>
+      </div> -->
+      
+			<button class="btn-light" type="submit" id="submit-button">Login</button>
+			<button class="btn-danger" type="button" id="cancel-button">Back</button> 
 			<div>
 			  <p id="welcome-message" style="display: none;">Welcome, User!</p>
 			  <p>Don't have an Account? Create One!: <a href="{% url 'signup' %}">Sign Up</a></div> 
@@ -141,9 +140,9 @@
   <footer class="text-center">
       <div class="container text-muted py-4 py-lg-5">
           <ul class="list-inline">
-              <li class="list-inline-item me-4"><a class="link-secondary" href="#">Link 1</a></li>
-              <li class="list-inline-item me-4"><a class="link-secondary" href="#">Link 2</a></li>
-              <li class="list-inline-item"><a class="link-secondary" href="#">Link 3</a></li>
+              <li class="list-inline-item me-4"><a class="link-secondary" href="#">Facebook:FuelBuddy</a></li>
+              <li class="list-inline-item me-4"><a class="link-secondary" href="#">Twitter:@FuelBuddy</a></li>
+              <li class="list-inline-item"><a class="link-secondary" href="#">Instagram:@FuelBuddy</a></li>
           </ul>
           <ul class="list-inline">
               <li class="list-inline-item me-4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-facebook">
@@ -174,21 +173,5 @@
         window.location.href = "{% url 'index' %}";
     });
 </script>
-  <script>
-    // Assuming you have a variable 'loginSuccess' that indicates successful login
-    if (loginSuccess) {
-      // Wait for 3 seconds (3000 milliseconds) before redirecting
-      setTimeout(function () {
-        // Redirect to the index page
-        window.location.href = "{% url 'index' %}";
-
-        // Display a welcome message
-        alert("Welcome, Siva!");
-      }, 3000);
-    }
-  </script>
-
-
 </body>
-
 </html>
