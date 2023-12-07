@@ -41,4 +41,10 @@ class AboutUs(models.Model):
         image = models.ImageField(upload_to='about_us_images/')
         # Add any other fields you need for the About Us page
 
+
+
+
+    
+
+
 #!/usr/bin/env python3

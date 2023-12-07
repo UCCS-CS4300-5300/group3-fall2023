@@ -9,6 +9,7 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from geopy.geocoders import Nominatim
 from geopy.distance import Geodesic
 import folium
+from django.http import HttpResponse
 from folium import IFrame
 from .forms import SearchForm
 from django.http import HttpResponse, HttpResponseRedirect
