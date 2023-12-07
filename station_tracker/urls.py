@@ -22,5 +22,9 @@ urlpatterns = [
    path('payment/', views.user_payment, name="payment"),
    path('rewards/', views.render_rewards, name="rewards"),
    path('earn_rewards/', views.render_earn_rewards, name="earn_rewards"),
+   #path('create_checkout_session/', views.create_checkout_session, name="checkout"),
+   path('map/', views.map_view, name='map_view'),
+
+
 ]
 
