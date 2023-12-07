@@ -14,8 +14,6 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append('/home/runner/group3-fall2023-1')  # Add this line
 os.environ['DJANGO_SETTINGS_MODULE'] = 'station_tracker.settings'
 
-
-
 class GasStationModelTest(TestCase):
   def test_gas_station_creation(self):
       gas_station = Gas_Station.objects.create(
@@ -27,6 +25,14 @@ class GasStationModelTest(TestCase):
           diesel_price=3.80,
       )
       self.assertEqual(str(gas_station), "Gas Station")
+
+#himaja test cases
+class MyTestCase(TestCase):
+
+    def test_user_signup_view(self):
+        client = Client()  # Create a test client
+        response = client.get(reverse('signup'))
+        self.assertEqual(response.status_code, 200)
 
 
 class FeedbackModelTest(TestCase):
@@ -175,3 +181,76 @@ class ModelTest(TestCase):
       self.assertNotEqual(about_us_from_db.image, "about_us_images/test_image.jpg")
   
   
+
+from django.test import TestCase
+from django.contrib.auth.models import User
+from .models import Customer, GasStationOwner, Gas_Station, Feedback
+
+class YourAppTestCase(TestCase):
+
+    def setUp(self):
+        # Create a test user
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+
+    def test_index_view(self):
+        response = self.client.get('/index/')  # Replace '/index/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'index.html')
+
+    def test_main_view_authenticated_user(self):
+        self.client.force_login(self.user)
+        response = self.client.get('/main/')  # Replace '/main/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'main.html')
+
+    def test_user_signup_view(self):
+        response = self.client.get('/signup/')  # Replace '/signup/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'signup.html')
+
+    def test_user_login_view(self):
+        response = self.client.get('/login/')  # Replace '/login/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'login.html')
+
+    def test_user_logout_view(self):
+        response = self.client.get('/logout/')  # Replace '/logout/' with your actual URL
+        self.assertEqual(response.status_code, 302)  # Expecting a redirect after logout
+
+    def test_update_gas_prices_view(self):
+        self.client.force_login(self.user)
+        response = self.client.get('/update_gas_prices/')  # Replace '/update_gas_prices/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'update_gas_prices.html')
+
+    def test_render_feedback_form_view(self):
+        response = self.client.get('/feedback/')  # Replace '/feedback/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'feedback.html')
+
+    def test_map_view(self):
+        response = self.client.get('/map/')  # Replace '/map/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'station-tracker.html')
+
+    def test_user_about_view(self):
+        response = self.client.get('/about/')  # Replace '/about/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'about.html')
+
+    def test_user_fueldemand_view(self):
+        response = self.client.get('/fueldemand/')  # Replace '/fueldemand/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'fueldemand.html')
+
+    def test_user_stationowner_view(self):
+        response = self.client.get('/stationowner/')  # Replace '/stationowner/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'stationowner.html')
+
+    def test_user_payment_view(self):
+        response = self.client.get('/payment/')  # Replace '/payment/' with your actual URL
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'payment.html')
+
+    # Add more test cases as needed

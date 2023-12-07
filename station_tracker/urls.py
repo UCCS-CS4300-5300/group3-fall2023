@@ -1,8 +1,8 @@
-
 from django.urls import path, include
 from location_search import views as searchViews
 from .views import index, main
 from . import views
+from django.contrib import admin
 
 urlpatterns = [
    path('', views.index, name='home'),
@@ -19,6 +19,12 @@ urlpatterns = [
    path('about/', views.user_about, name="about"),
    path('fueldemand/', views.user_fueldemand, name="fueldemand"),
    path('stationowner/', views.user_stationowner, name="stationowner"),
-   path('payment/', views.user_payment, name="payment"),
+   #path('create_checkout_session/', views.create_checkout_session, name="checkout"),
+   path('payment/', views.user_payment, name='payment'),
+   path('map/', views.map_view, name='map_view'),
+   path('payment/', views.user_payment, name='user_payment'),
+
+
+
 ]
 
