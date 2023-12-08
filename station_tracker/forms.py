@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from . import models
 from django.forms import ModelForm, Textarea
-from .models import Feedback
+from .models import Feedback, Gas_Station, RewardTypes, EarnRewards, UserRewards
 
 class SignupForm(UserCreationForm):
   email = forms.EmailField(required=True,widget=forms.EmailInput(attrs={'class':'form-control','placeholder':'Email'}))
@@ -44,3 +44,12 @@ class FeedbackForm(forms.ModelForm):
       'gasStationAddr' : forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Gas Station Address', 'id':'gasStationAddr'}),
     }
  
+class EarnRewardsForm(forms.ModelForm):
+  class Meta:
+    model = EarnRewards
+    fields = ['GasStation', 'MoneySpent', 'RewardType']
+    widgets = { 
+      'GasStation' : forms.Select(attrs={'class': 'form-control'}),
+      'MoneySpent' : forms.NumberInput(attrs={'class': 'form-control', 'id' : 'money_spent'}),
+      'RewardType' : forms.Select(attrs={ 'class': 'form-control', 'id' : 'reward_type'}),
+    }

@@ -25,6 +25,7 @@
                     <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'fueldemand'%}">Fuel Demand</a></li>
                     <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'about'%}">About Us</a></li>
                     <li class="nav-item"><a class="nav-link fw-bold"href="{% url 'feedback'%}">Feedback Form</a></li>
+                  <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'rewards' %}">Rewards</a></li>
                 </ul>
               <!--  <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button" href="{% url 'signup' %}" >Log In</button><button class="btn btn-primary" type="button" href="{% url 'login' %}" style="background: rgb(12,57,84);">Sign Up</button></div> -->
             </div>
@@ -97,7 +98,7 @@ background-position: center;background-size: cover;">
                     <h2 class="fw-bold mb-2" style="text-shadow: 2px 0px var(--bs-primary-text-emphasis);">Rewards Program</h2>
                     <p class="mb-0" style="font-size: 17px;">Sign up for our rewards, check your points, and redeem rewards for using our app</p>
                 </div>
-                <div class="my-2"><a class="btn btn-light fs-5 py-2 px-4" role="button" href="#">Go to Rewards</a></div>
+                <div class="my-2"><a class="btn btn-light fs-5 py-2 px-4" role="button" href="{% url 'rewards' %}">Go to Rewards</a></div>
             </div>
         </div>
     </section>

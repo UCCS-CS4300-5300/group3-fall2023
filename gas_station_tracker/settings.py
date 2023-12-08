@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 X_FRAME_OPTIONS = '*'
-
+CSRF_TRUSTED_ORIGINS = ['https://group3-fall2023-1.brownnjasmine.repl.co']
 
 # Application definition
 

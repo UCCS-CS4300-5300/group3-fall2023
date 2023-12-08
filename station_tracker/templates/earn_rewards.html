@@ -27,60 +27,32 @@
             <div class="d-none d-md-block"><a class="btn btn-primary" role="button" href="{% url 'login' %}" style="background: rgb(235, 238, 242); color: rgb(25, 28, 28);">Log In</a><a class="btn btn-primary" role="button" href="{% url 'signup' %}" style="background: rgb(12,57,84);">Sign Up</a><!--<a class="btn btn-primary" role="button" href="{% url 'logout' %}" style="background: rgb(12,57,84);">Log out</a>--></div>
         </div>
     </nav>
-
-    <div class="container">
-      <div class="row" style="margin: 12px -12px;height: 500px;">
-          <div class="col-md-4 col-xl-3"></div>
-          <div class="col-md-4 col-xl-6">
-              <div class="card bg-light border-light border rounded shadow focus-ring focus-ring-primary" style="height: 500px;">
-                  <div class="card-header">
-                      <h1 class="text-muted mb-0" style="text-align: center;">Your Total Number of Points Is:</h1>
-                  </div>
-                  <div class="card-body" style="display: grid;">
-                    {% if rewards %}
-                      <h2 class="text-primary" data-aos="fade-up" style="text-align: center; display: block;position: relative;font-size: 128px;padding: 64px;">{{ rewards.points }} </h2>
-                    {% endif %}
-                      <h2 class="text-muted" style="text-align: center;font-size: 64px;">Points!</h2>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4 col-xl-3"></div>
-      </div>
-    </div>
-    <div class="container py-4 py-xl-5">
-      <div class="row gy-4 row-cols-2 row-cols-md-4">
-          <div class="col-xl-6">
-              <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                  <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-gift">
-                          <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zM1 4v2h6V4H1zm8 0v2h6V4H9zm5 3H9v8h4.5a.5.5 0 0 0 .5-.5V7zm-7 8V7H2v7.5a.5.5 0 0 0 .5.5H7z"></path>
-                      </svg></div>
-                  <div class="px-3">
-                      <h2 class="fw-bold mb-0">X</h2>
-                      <p class="mb-0">Points Left Until Next Reward!</p>
-                  </div>
-              </div>
-          </div>
-          <div class="col-xl-6">
-              <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                  <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-coin">
-                          <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z"></path>
-                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
-                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
-                      </svg></div>
-                  <div class="px-3">
-                      <h2 class="fw-bold mb-0">X</h2>
-                      <p class="mb-0">Saved So Far!</p>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <form action="{% url 'earn_rewards'%}">
-        <input type="submit" value="Earn Points" class="btn btn-primary btn-lg btn-block">
-      </form>
-    </div>
-
-    
   
+  <form id="contactForm-1" action="/earn_rewards/" method="post">
+    {% csrf_token %}
+      <div class="row">
+          <div class="col-md-6">
+              <div id="successfail"></div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6" id="message">
+              <fieldset>
+                  <legend><i class="fa fa-envelope"></i> Earn Points Here!</legend>
+              </fieldset>
+              <!--<div class="form-group"><label class="form-label" for="Gas Station">Name</label></div> -->
+              <div class="form-group"><label class="form-label" for="email">Money Spent</label>{{ form.MoneySpent }}</div>
+              <div class="row">
+                  <div class="col-sm-6">
+                      <div class="form-group"><label class="form-label" for="reward_type">Next Reward: </label>{{ form.RewardType }}</div>
+                  </div>
+              </div>
+              <div class="form-group mb-3" style="margin: 2em;"><button class="btn btn-primary d-block w-100" type="submit">Earn Points! <i class="fa fa-chevron-circle-right"></i></button></div>
+              <hr>
+          </div>
+      </div>
+  </form>
+
     <footer class="text-center">
         <div class="container text-muted py-4 py-lg-5">
             <ul class="list-inline">
