@@ -34,15 +34,17 @@ def submit(request):
         my_secret = os.environ['api_key']
         
         locationInfo = geocode(search,my_secret)
-
-        lat_lng = locationInfo['results'][0]['geometry']['location']
+        
+        if locationInfo['results']:
+            print("#########################################################################################################################################################################################################################################################################")
+            lat_lng = locationInfo['results'][0]['geometry']['location']
         
 
 
         #Convert miles to meters and then pass to the API make database entries
-        apiRange = convToRange(range) * 1609.34
-        gas_station_database(request, lat_lng, apiRange,my_secret)
-        request.session['map_context'] = map_viewSubmit(request, search, range,searchPref)
+            apiRange = (convToRange(range) * 1609.34)/2
+            gas_station_database(request, lat_lng, apiRange,my_secret)
+            request.session['map_context'] = map_viewSubmit(request, search, range,searchPref)
 
         
         
@@ -254,12 +256,12 @@ def map_viewSubmit(request, search, userRange, searchPref):
         icon_text = ""
 
         #Updates each marker with chosen gas prices
-        if searchPref == 'U-80' and station.regular_gas_price is not None:
+        if searchPref == 'Unleaded' and station.regular_gas_price is not None:
             icon_text = station.regular_gas_price
-        elif searchPref == 'U-85' and station['premium_gas_price'] is not None:
-            icon_text = station['premium_gas_price']
-        elif searchPref == 'Diesel' and station['diesel_price'] is not None:
-            icon_text = station['diesel_price']
+        elif searchPref == 'Premium' and station.premium_gas_price is not None:
+            icon_text = station.premium_gas_price
+        elif searchPref == 'Diesel' and station.diesel_price is not None:
+            icon_text = station.diesel_price
         else:
             icon_text = 'N/A'  
         
@@ -270,7 +272,7 @@ def map_viewSubmit(request, search, userRange, searchPref):
         #Mark each gas station with marker and popup with station name and link to  google maps
 
 
-        folium.Marker(coords, tooltip = station.station_name + ": "+ station.address, popup = folium.Popup(f"<a href = http://maps.google.com/?q={station.address.replace(' ', '+')}>Directions</a><a href='updatePrice/{gas_station_id.id}' class='btn' target='_top'>Update gas prices</a><p>U-80: {station.regular_gas_price}</p><p>U-85: {station.premium_gas_price}</p><p>Diesel: {station.diesel_price}</p>"
+        folium.Marker(coords, tooltip = station.station_name + ": "+ station.address, popup = folium.Popup(f"<a href = http://maps.google.com/?q={station.address.replace(' ', '+')}>Directions</a><a href='updatePrice/{gas_station_id.id}' class='btn' target='_top'>Update gas prices</a><p>Unleaded: {station.regular_gas_price}</p><p>Premium: {station.premium_gas_price}</p><p>Diesel: {station.diesel_price}</p>"
          ),icon = folium.DivIcon(html=f"""<div style="background-color: #3333cc;
         border-radius: 50%;
         color: white;
